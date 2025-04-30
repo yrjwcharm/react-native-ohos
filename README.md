@@ -51,4 +51,17 @@
     "dependencies": {}
   }
 ```
-### npm run codegen命令
+### 1.npm run codegen命令
+![alt text](image-2.png)
+### 2.按照V2 新版本端能力提供方法 配置
+
+### 3.倘若最终报了如下错误
+```CMake
+ CMake Error at CMakeLists.txt:84 (target_include_directories):
+  Cannot specify include directories for target "rnoh_app" which is not built
+  by this project.
+```
+
+**是因为** 这两处必须一致
+
+![alt text](image-3.png)
