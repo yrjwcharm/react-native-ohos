@@ -50,6 +50,14 @@
           {
             "name": "ohos.extension.backup",
             "resource": "$profile:backup_config"
+          },
+          {
+            "name": "half_leading",
+            "value": "true"
+          },
+          {
+            "name": "can_preview_text",
+            "value": "true"
           }
         ]
       }

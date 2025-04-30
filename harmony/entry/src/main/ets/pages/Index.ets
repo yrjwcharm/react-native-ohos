@@ -8,7 +8,8 @@ import {
   RNOHErrorDialog,
   RNOHLogger,
   TraceJSBundleProviderDecorator,
-  RNOHCoreContext
+  RNOHCoreContext,
+  RNInstanceImpl
 } from '@rnoh/react-native-openharmony';
 import { createRNPackages } from '../RNPackagesFactory';
 
@@ -27,7 +28,6 @@ struct Index {
   aboutToAppear() {
     this.logger = this.rnohCoreContext!.logger.clone("Index")
     const stopTracing = this.logger.clone("aboutToAppear").startTracing();
-
     this.shouldShow = true
     stopTracing();
   }
