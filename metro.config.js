@@ -1,3 +1,5 @@
+// AwesomeProject/metro.config.js
+
 const {mergeConfig, getDefaultConfig} = require('@react-native/metro-config');
 const {
   createHarmonyMetroConfig,

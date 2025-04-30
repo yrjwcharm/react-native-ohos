@@ -5,6 +5,7 @@
   "main": "",
   "author": "",
   "license": "",
-  "dependencies": {}
+  "dependencies": {
+    "@rnoh/react-native-openharmony": "file:../libs/react_native_openharmony_release.har"}
 }
 
