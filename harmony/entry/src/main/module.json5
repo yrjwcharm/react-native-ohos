@@ -34,6 +34,12 @@
         ]
       }
     ],
+    "requestPermissions": [
+      {
+        //配置RN harmony端摇一摇权限
+        "name": "ohos.permission.ACCELEROMETER"
+      }
+    ],
     "extensionAbilities": [
       {
         "name": "EntryBackupAbility",
@@ -45,7 +51,7 @@
             "name": "ohos.extension.backup",
             "resource": "$profile:backup_config"
           }
-        ],
+        ]
       }
     ]
   }
