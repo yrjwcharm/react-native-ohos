@@ -4,6 +4,7 @@ set(CMAKE_SKIP_BUILD_RPATH TRUE)
 set(NATIVERENDER_ROOT_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
 set(OH_MODULE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../oh_modules")
 set(RNOH_CPP_DIR "${OH_MODULE_DIR}/@rnoh/react-native-openharmony/src/main/include")
+set(RNOH_GENERATED_DIR "${CMAKE_CURRENT_SOURCE_DIR}/generated")
 set(REACT_COMMON_PATCH_DIR "${RNOH_CPP_DIR}/patches/react_native_core")
 
 set(CMAKE_CXX_STANDARD 17)
@@ -67,11 +68,19 @@ configure_file(
   ${RNOH_CPP_DIR}/third-party/folly/folly/folly-config.h
 )
 file(GLOB GENERATED_CPP_FILES "./generated/*.cpp")
+
+set(rtn_calculator_generated_dir "${RNOH_GENERATED_DIR}/rtn_calculator")
+file(GLOB_RECURSE rtn_calculator_generated_dir_SRC "${rtn_calculator_generated_dir}/**/*.cpp")
+file(GLOB rtn_calculator_package_SRC CONFIGURE_DEPENDS *.cpp)
 # 添加rnoh动态共享包
 add_library(rnoh SHARED
+    ${rtn_calculator_generated_dir_SRC}
+     ${rtn_calculator_package_SRC}
     "${RNOH_CPP_DIR}/RNOHOther.cpp"
     "${RNOH_CPP_DIR}/third-party/folly/folly/lang/SafeAssert.cpp"
     )
+target_include_directories(rnoh_app PUBLIC ${rtn_calculator_generated_dir})
+
 # 链接其他so
 target_link_directories(rnoh PUBLIC ${OH_MODULE_DIR}/@rnoh/react-native-openharmony/libs/arm64-v8a)
 target_link_libraries(rnoh PUBLIC

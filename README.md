@@ -51,3 +51,4 @@
     "dependencies": {}
   }
 ```
+### npm run codegen命令
