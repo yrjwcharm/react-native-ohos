@@ -1,0 +1,6 @@
+17:10:19:566 log task queue not empty
+17:10:19:567 log task size: 1
+17:10:19:567 log before pop task size: 1
+17:10:19:567 log after task size: 0
+17:10:20:061 log timer task size: 1
+17:10:20:072 log timer task size: 1

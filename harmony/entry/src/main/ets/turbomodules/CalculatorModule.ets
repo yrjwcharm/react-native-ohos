@@ -1,5 +1,4 @@
-// entry/src/main/ets/turbomodule/CalculatorModule.ts
-import { TurboModule } from '@rnoh/react-native-openharmony/ts';
+
 import { TM } from '@rnoh/react-native-openharmony/generated/ts';
 import { AnyThreadTurboModule } from '@rnoh/react-native-openharmony';
 

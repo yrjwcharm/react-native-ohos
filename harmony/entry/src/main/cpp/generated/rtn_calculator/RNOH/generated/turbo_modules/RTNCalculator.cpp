@@ -15,14 +15,6 @@ using namespace facebook;
 RTNCalculator::RTNCalculator(const ArkTSTurboModule::Context ctx, const std::string name) : ArkTSTurboModule(ctx, name) {
     methodMap_ = {
         ARK_ASYNC_METHOD_METADATA(add, 2),
-              { "add",
-        { 2,
-           [] (facebook::jsi::Runtime& rt, facebook::react::TurboModule& turboModule, const facebook::jsi::Value* args, size_t count) {
-//             return static_cast<ArkTSTurboModule&>(turboModule).callAsync(rt, "add", args, count);
-            return jsi::Value(args[0].asNumber() + args[1].asNumber());
-           } 
-         } 
-       }
     };
 }
 

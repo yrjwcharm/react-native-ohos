@@ -11,8 +11,6 @@
 
 
 
-
-
 #### 端能力TurboModules/RTNCalculator/package.json
 
 ```json
@@ -56,11 +54,8 @@
 **安装TurboModules/RTNCalculator**
 
 **node_modules下可以查看**
-
 ![alt text](image-4.png)
 ### 2.npm run codegen /yarn codegen 命令
-
-
 ![alt text](image-2.png)
 ### 3.按照V2 新版本端能力提供方法 配置
 ### 4.倘若最终报了如下错误
