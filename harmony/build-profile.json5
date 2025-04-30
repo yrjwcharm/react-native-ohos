@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/yanruifeng/.ohos/config/default_harmony_Q0m2teAqAhGatcRlsZl2CNirRcdodVyYSVS4WZO6yHQ=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001BD5E04503184FB03B453C9F058A5AADC1CB8EA1A8DF266AB8DD9DD65CCB3923DB9286307C0B1D19",
+          "profile": "/Users/yanruifeng/.ohos/config/default_harmony_Q0m2teAqAhGatcRlsZl2CNirRcdodVyYSVS4WZO6yHQ=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/yanruifeng/.ohos/config/default_harmony_Q0m2teAqAhGatcRlsZl2CNirRcdodVyYSVS4WZO6yHQ=.p12",
+          "storePassword": "0000001BC8EAF46A152ABDCC518B3DD62D5B04BF7559A86771C87DEDF8EF49E255D17540B9EB24D92A19B3"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",
