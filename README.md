@@ -9,9 +9,9 @@
 
 **https://gitcode.com/openharmony-sig/ohos_react_native/blob/master/docs/zh-cn/TurboModule.md**
 
-![alt text](image-1.png)
 
-![alt text](image.png)
+
+
 
 #### 端能力TurboModules/RTNCalculator/package.json
 
@@ -52,11 +52,18 @@
     "dependencies": {}
   }
 ```
-### 1.npm run codegen命令
-![alt text](image-2.png)
-### 2.按照V2 新版本端能力提供方法 配置
+### 1.项目根目录下执行npm i/yarn 命令
+**安装TurboModules/RTNCalculator**
 
-### 3.倘若最终报了如下错误
+**node_modules下可以查看**
+
+![alt text](image-4.png)
+### 2.npm run codegen /yarn codegen 命令
+
+
+![alt text](image-2.png)
+### 3.按照V2 新版本端能力提供方法 配置
+### 4.倘若最终报了如下错误
 ```CMake
  CMake Error at CMakeLists.txt:84 (target_include_directories):
   Cannot specify include directories for target "rnoh_app" which is not built
