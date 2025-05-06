@@ -18,7 +18,6 @@ public class NativeCalculatorModule extends ReactContextBaseJavaModule {
     public String getName() {
         return "RTNCalculator";
     }
-//    @ReactMethod(isBlockingSynchronousMethod = true)
     @ReactMethod
     public void add(int a, int b, Promise promise) {
        promise.resolve(a+b);
