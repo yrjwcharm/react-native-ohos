@@ -1,12 +1,4 @@
 {
-  "codegenConfig": {
-    "name": "NativeCalculatorSpec",
-    "type": "modules",
-    "jsSrcsDir": "TurboModules/RTNCalculator/src/specs",
-    "android": {
-      "javaPackageName": "com.awesomeproject"
-    }
-  },
   "dependencies": {
     "@react-native-oh/react-native-harmony": "0.72.48",
     "@rtn/calculator": "file:./TurboModules/RTNCalculator",

@@ -1,4 +1,6 @@
-#### 1.react-native 适配 Harmony Demo
+#### 1.react-native 适配 Android/ios/Harmony 三端 TuroModules 方法 基于 0.72.5 版本
+
+## Harmony
 
 ##### 官方地址：
 
@@ -63,3 +65,17 @@
 **是因为** 这两处必须一致
 
 ![alt text](image-3.png)
+
+## iOS
+
+```javascript
+[!] Error installing boost
+Verification checksum was incorrect, expected f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41, got 79e6d3f986444e5a80afbeccdaf2d1c1cf964baa8d766d20859d653a16c39848
+```
+
+**解决方案： 0.72 按照方法替换即可**
+https://github.com/facebook/react-native/issues/42180
+
+#### 清除 cocoapods 命令缓存
+
+**_pod cache clean --all_**
