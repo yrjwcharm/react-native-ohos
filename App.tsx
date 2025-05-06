@@ -1,13 +1,6 @@
 import {RTNCalculator} from '@rtn/calculator';
 import React, {useState} from 'react';
-import {
-  Button,
-  NativeModules,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-} from 'react-native';
+import {Button, SafeAreaView, StatusBar, StyleSheet, Text} from 'react-native';
 
 const App = () => {
   const [result, setResult] = useState<number | null>(null);

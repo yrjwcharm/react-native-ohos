@@ -1,0 +1,36 @@
+{
+  "name": "@react-native-oh-tpl/react-native-svga-player",
+  "version": "1.0.0",
+  "description": "Sample package of Fabric Component in harmony",
+  "main": "index.ts",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "harmony": {
+    "alias": "react-native-svga-player",
+    "codegenConfig": [
+      {
+        "version": 1,
+        "specPaths": [
+          "./src/specs"
+        ]
+      }
+    ]
+  },
+  "files": [
+    "index.ts",
+    "src/*",
+    "harmony.tar.gz"
+  ],
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.47",
+    "react": "18.2.0",
+    "react-native": "0.72.5"
+  },
+  "dependencies": {}
+}

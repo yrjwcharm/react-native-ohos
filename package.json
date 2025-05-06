@@ -1,4 +1,17 @@
 {
+  "name": "AwesomeProject",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "bundle-harmony": "react-native bundle-harmony --dev=false --minify=true --entry-file index.js --bundle-output ./harmony/entry/src/main/resources/rawfile/bundle.harmony.js",
+    "codegen": "react-native codegen-harmony --cpp-output-path ./harmony/entry/src/main/cpp/generated --rnoh-module-path ./harmony/entry/oh_modules/@rnoh/react-native-openharmony",
+    "harmony": "hdc rport tcp:8081 tcp:8081 && npm run start",
+    "ios": "react-native run-ios",
+    "lint": "eslint .",
+    "start": "react-native start",
+    "test": "jest",
+    "postinstall": "patch-package"
+  },
   "dependencies": {
     "@react-native-oh/react-native-harmony": "0.72.48",
     "@rtn/calculator": "file:./TurboModules/RTNCalculator",
@@ -26,19 +39,5 @@
   },
   "engines": {
     "node": ">=16"
-  },
-  "name": "AwesomeProject",
-  "private": true,
-  "scripts": {
-    "android": "react-native run-android",
-    "bundle-harmony": "react-native bundle-harmony --dev=false --minify=true --entry-file index.js --bundle-output ./harmony/entry/src/main/resources/rawfile/bundle.harmony.js",
-    "codegen": "react-native codegen-harmony --cpp-output-path ./harmony/entry/src/main/cpp/generated --rnoh-module-path ./harmony/entry/oh_modules/@rnoh/react-native-openharmony",
-    "harmony": "hdc rport tcp:8081 tcp:8081 && npm run start",
-    "ios": "react-native run-ios",
-    "lint": "eslint .",
-    "start": "react-native start",
-    "test": "jest",
-    "postinstall": "patch-package"
-  },
-  "version": "0.0.1"
+  }
 }
