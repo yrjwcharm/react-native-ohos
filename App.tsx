@@ -1,13 +1,20 @@
 import {RTNCalculator} from '@rtn/calculator';
 import React, {useState} from 'react';
-import {Button, SafeAreaView, StatusBar, StyleSheet, Text} from 'react-native';
+import {
+  Button,
+  NativeModules,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+} from 'react-native';
 
 const App = () => {
   const [result, setResult] = useState<number | null>(null);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <Text style={styles.resultLabel}>3+7={result ?? '??'}</Text>
+      <Text style={styles.resultLabel}>3+7={result ?? ''}</Text>
       <Button
         title="计算获取结果"
         onPress={async () => {
