@@ -1,0 +1,35 @@
+{
+    "author": "<Your Name> <your_email@your_provider.com> (https://github.com/<your_github_handle>)",
+    "dependencies": {},
+    "description": "Add numbers with TurboModules",
+    "devDependencies": {
+        "@types/react": "^18.2.47",
+        "react": "18.2.0",
+        "react-native": "0.72.5"
+    },
+    "files": [
+        "harmony.tar.gz",
+        "index.ts",
+        "src/*"
+    ],
+    "harmony": {
+        "alias": "@rtn-calculator",
+        "codegenConfig": [
+            {
+                "specPaths": [
+                    "./src/specs"
+                ],
+                "version": 1
+            }
+        ]
+    },
+    "keywords": [],
+    "license": "ISC",
+    "main": "index.ts",
+    "name": "rtn-calculator",
+    "peerDependencies": {
+        "react": "*",
+        "react-native": "*"
+    },
+    "version": "1.0.0"
+}
