@@ -1,0 +1,59 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/mac/.ohos/config/default_harmony_lYojn7-eBS_3e2opeaqw3vunFhA3SHP7qduVvYDLllk=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001AB53002F22334BE904476BDDE672C935B7E799AEC84C6266D85E2F1C1328013A1443AA1F87103",
+          "profile": "/Users/mac/.ohos/config/default_harmony_lYojn7-eBS_3e2opeaqw3vunFhA3SHP7qduVvYDLllk=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/mac/.ohos/config/default_harmony_lYojn7-eBS_3e2opeaqw3vunFhA3SHP7qduVvYDLllk=.p12",
+          "storePassword": "0000001AEDAC51B4C9725283B59ED97D0EA387980749350451F9D5C7700318D2A270969EAF5A4D0F31E6"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "compatibleSdkVersion": "5.0.4(16)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "svgaplayer",
+      "srcPath": "./svgaplayer",
+    }
+  ]
+}
