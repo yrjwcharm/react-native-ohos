@@ -1,4 +1,3 @@
-import { SvgaPlayerView } from '@react-native-ohos/react-native-svga-player';
 import {
   AnyJSBundleProvider,
   ComponentBuilderContext,
@@ -12,19 +11,10 @@ import {
   RNOHCoreContext,
 } from '@rnoh/react-native-openharmony';
 import { createRNPackages } from '../RNPackagesFactory';
-const arkTsComponentNames: Array<string> = [SvgaPlayerView.NAME];
+const arkTsComponentNames: Array<string> = [];
 
 @Builder
 export function buildCustomRNComponent(ctx: ComponentBuilderContext) {
-  Stack() {
-    if (ctx.componentName === SvgaPlayerView.NAME) {
-      SvgaPlayerView({
-        ctx: ctx.rnComponentContext,
-        tag: ctx.tag
-      })
-    }
-  }
-  .position({ x: 0, y: 0 })
 }
 
 const wrappedCustomRNComponentBuilder = wrapBuilder(buildCustomRNComponent);

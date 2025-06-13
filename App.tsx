@@ -1,9 +1,30 @@
-import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Button,
+  View,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+} from 'react-native';
+import {RTNCalculator} from '@rtn-calculator';
 const App = () => {
+  const [result, setResult] = useState<number | null>(null);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
+      <View>
+        <Text style={{marginLeft: 20, marginTop: 20}}>
+          3+7={result ?? '??'}
+        </Text>
+        <Button
+          title="计算"
+          onPress={async () => {
+            const value = await RTNCalculator?.add(3, 7);
+            setResult(value ?? 0);
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
 };

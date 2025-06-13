@@ -123,7 +123,6 @@ if("$ENV{RNOH_C_API_ARCH}" STREQUAL "1")
     target_compile_definitions(rnoh PUBLIC C_API_ARCH)
 endif()
 # RNOH_END: add_package_subdirectories
-add_subdirectory("${OH_MODULE_DIR}/@react-native-ohos/react-native-svga-player/src/main/cpp" ./svgaplayer)
 
 # 添加rnoh_app共享包
 add_library(rnoh_app SHARED
@@ -134,6 +133,5 @@ add_library(rnoh_app SHARED
 )
 
 target_link_libraries(rnoh_app PUBLIC rnoh)
-target_link_libraries(rnoh_app PUBLIC rnoh_svgaplayer)
 
 target_compile_options(rnoh_app PUBLIC ${folly_compile_options} -DRAW_PROPS_ENABLED -std=c++17)
