@@ -9,7 +9,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import RNSvgaPlayer from 'react-native-ohos-svgaplayer';
+import RNSvgaPlayer from 'react-native-svga-player';
 const files = ['Goddess', 'Rocket', 'heartbeat', 'rose_2.0.0'];
 const App = () => {
   const svgaPlayerRef = useRef<RNSvgaPlayer>(null);
