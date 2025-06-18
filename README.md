@@ -1,33 +1,64 @@
-#### 1.react-native Svga 动画播放器 适配 Android/ios/Harmony 三端 DEMO 示例 基于 0.72.5 版本
+## **_这是一款使用 ReactNative 加载 Svga 动画的播放器插件_** [Android/ios/harmony 三端统一]
 
-### 点击下载观看效果
+> ### 版本：latest
 
-<https://github.com/yrjwcharm/react-native-ohos/raw/refs/heads/feature/rnoh/svgaplayer/harmony/svgaplayer.mp4>
+<p align="center">
+    <a href="https://github.com/wonday/react-native-pdf/blob/master/LICENSE">
+        <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License" />
+    </a>
+</p>
+
+> [!TIP] [Github 地址](https://github.com/yrjwcharm/react-native-svga-player)
+
+#### 1.react-native Svga 动画播放器 适配 Android/ios/Harmony 基于 0.72.5 版本
 
 ## react-native Harmony
 
 ##### 仓库地址：
 
-**https://gitcode.com/yrjwcharm/react-native-ohos-svgaplayer**
+**https://github.com/yrjwcharm/react-native-ohos-svgaplayer**
 
 ## react-native Android/Ios
 
 ##### 仓库地址：
 
-**https://github.com/BANG88/react-native-svga-player**
-
-> 由于 react-native-svga-player[`android/ios`] 很久没有被维护，本项目已修复好 android/ios 相关原生布丁 patch[`react-native-svga-player+1.1.0.patch`]安装会自动应用
+**https://github.com/yrjwcharm/react-native-svga-player**
 
 ### 安装
 
 ```javascript
-yarn add react-native-svga-player
+yarn add @yrjwcharm/react-native-svga-player
 
 yarn add react-native-ohos-svgaplayer
 
 ```
 
-#### 因为 react-native-ohos-svgaplayer 库有设置 Alias 别名 所以三端可以统一使用 `import RNSvgaPlayer from 'react-native-svga-player';`导入
+> 为了统一使用 react-native-svga-player 库名导入。你需要把@yrjwcharm/react-native-svga-player 库修改下
+
+```diff
++  "dependencies": {
+    "@react-native-oh/react-native-harmony": "0.72.48",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
+    "react": "18.2.0",
+    "react-native": "0.72.5",
+-    "@yrjwcharm/react-native-svga-player":"^1.2.0"
++   "react-native-svga-player":"npm:@yrjwcharm/react-native-svga-player@1.2.0",
+    "react-native-ohos-svgaplayer": "^1.1.7"
+  },
+
+@Builder
+function buildCustomComponent(ctx: ComponentBuilderContext) {
++  if (ctx.componentName === SvgaPlayerView.NAME) {
++   SvgaPlayerView({
++     ctx: ctx.rnComponentContext,
++     tag: ctx.tag
++   })
++ }
+ ...
+}
+...
+```
 
 导入
 
@@ -120,7 +151,7 @@ const styles = StyleSheet.create({
 
 `npm run harmony`
 
-[下载观看 DEMO 效果](https://github.com/yrjwcharm/react-native-ohos/raw/refs/heads/feature/rnoh/svgaplayer/images/svga.mp4)
+[点击下载观看效果](https://github.com/yrjwcharm/react-native-ohos/raw/refs/heads/feature/rnoh/svgaplayer/harmony/svgaplayer.mp4)
 
 #### 播放远程动画三端是统一的
 
@@ -296,8 +327,3 @@ const styles = StyleSheet.create({
   },
 });
 ```
-
-#### 运行 demo
-
-- git clone https://github.com/yrjwcharm/react-native-ohos.git
-- git checkout feature/rnoh/svgaplayer
