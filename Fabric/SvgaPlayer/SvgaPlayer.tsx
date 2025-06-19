@@ -1,22 +1,25 @@
-import React, {forwardRef, useRef} from 'react';
+import React, {useRef, forwardRef} from 'react';
 import SvgaPlayerView, {
   SvgaPlayerProps,
-} from './src/specs/SvgaPlayerNativeComponent';
+} from './specs/SvgaPlayerNativeComponent';
 export type GeneratedSampleComponentRef = {
   load: (source: string) => void;
   startAnimation: () => void;
   pauseAnimation: () => void;
   stopAnimation: () => void;
-  stepToFrame: (toFrame: number, andPlay: boolean) => void;
-  stepToPercentage: (toPercentage: number, andPlay: boolean) => void;
+  // stepToFrame: (toFrame: number, andPlay: boolean) => void;
+  // stepToPercentage: (toPercentage: number, andPlay: boolean) => void;
 };
 
 interface ISvgaPlayerProps {
   style?: StyleProp<ViewStyle>;
   source: string;
+  toFrame: number;
+  currentState: string;
+  toPercentage: number;
   onFinished?: () => void;
-  onFrame?: (event: any) => void;
-  onPercentage?: (event: any) => void;
+  onFrame?: (value: number) => void;
+  onPercentage?: (value: number) => void;
 }
 import {
   findNodeHandle,
@@ -25,7 +28,7 @@ import {
   UIManager,
   ViewStyle,
 } from 'react-native';
-export const RNSvgaPlayer = forwardRef<
+export const SvgaPlayer = forwardRef<
   GeneratedSampleComponentRef,
   ISvgaPlayerProps
 >((props, ref) => {
@@ -71,24 +74,24 @@ export const RNSvgaPlayer = forwardRef<
           );
         }
       },
-      stepToFrame(toFrame: number, andPlay: boolean) {
-        if (svgaPlayerRef?.current) {
-          UIManager.dispatchViewManagerCommand(
-            findNodeHandle(svgaPlayerRef.current),
-            'stepToFrame',
-            [toFrame, andPlay],
-          );
-        }
-      },
-      stepToPercentage(toPercentage: number, andPlay: boolean) {
-        if (svgaPlayerRef?.current) {
-          UIManager.dispatchViewManagerCommand(
-            findNodeHandle(svgaPlayerRef.current),
-            'stepToPercentage',
-            [toPercentage, andPlay],
-          );
-        }
-      },
+      // stepToFrame(toFrame: number, andPlay: boolean) {
+      //   if (svgaPlayerRef?.current) {
+      //     UIManager.dispatchViewManagerCommand(
+      //       findNodeHandle(svgaPlayerRef.current),
+      //       'stepToFrame',
+      //       [toFrame, andPlay],
+      //     );
+      //   }
+      // },
+      // stepToPercentage(toPercentage: number, andPlay: boolean) {
+      //   if (svgaPlayerRef?.current) {
+      //     UIManager.dispatchViewManagerCommand(
+      //       findNodeHandle(svgaPlayerRef.current),
+      //       'stepToPercentage',
+      //       [toPercentage, andPlay],
+      //     );
+      //   }
+      // },
     }),
     [],
   );
@@ -97,6 +100,9 @@ export const RNSvgaPlayer = forwardRef<
       style={props.style}
       ref={svgaPlayerRef}
       source={props.source}
+      toFrame={props.toFrame}
+      currentState={props.currentState}
+      toPercentage={props.toPercentage}
       onFinished={() => {
         props.onFinished && props.onFinished();
       }}
@@ -104,10 +110,9 @@ export const RNSvgaPlayer = forwardRef<
         props.onFrame && props.onFrame(e.nativeEvent.value);
       }}
       onPercentage={e => {
-        props.onFrame && props.onFrame(e.nativeEvent.value);
+        props.onPercentage && props.onPercentage(e.nativeEvent.value);
       }}
     />
   );
 });
-
-export default RNSvgaPlayer;
+export default SvgaPlayer;

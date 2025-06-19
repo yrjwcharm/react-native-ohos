@@ -1,41 +1,55 @@
 {
-  "author": "",
+  "author": "闫瑞锋",
+  "bugs": {
+    "url": "https://github.com/yrjwcharm/react-native-svga-player/issues"
+  },
+  "codegenConfig": {
+    "android": {
+      "javaPackageName": "com.svgaplayer"
+    },
+    "ios": {
+      "componentProvider": {
+        "SvgaPlayerView": "RCTSvgaPlayer"
+      }
+    },
+    "jsSrcsDir": "specs",
+    "name": "RTNSvgaPlayerSpec",
+    "type": "components"
+  },
   "dependencies": {},
-  "description": "Sample package of Fabric Component in harmony",
+  "description": "这是一款使用ReactNative加载Svga动画的新架构支持开源插件",
   "devDependencies": {
     "@types/react": "^18.2.47",
     "react": "18.2.0",
     "react-native": "0.72.5"
-    },
-  "files": [
-    "harmony.tar.gz",
-    "index.ts",
-    "src/*"
-  ],
-  "harmony": {
-    "alias": "react-native-svga-player",
-    "codegenConfig":{
-      "version":2,
-      "specPaths":[
-        "./src/specs"
-      ]
-      
-    }
   },
+  "files": [
+    "android",
+    "ios",
+    "specs",
+    "index.tsx",
+    "SvgaPlayer.tsx",
+    "react-native-svga-player.podspec",
+    "RNSvgaPlayer.tsx"
+    ],
   "keywords": [
     "fabric",
-    "harmony",
     "player",
     "react-native",
     "svga",
     "SvgaPlayer"
   ],
   "license": "ISC",
-  "main": "index.ts",
-  "name": "react-native-ohos-svgaplayer",
+  "main": "index.tsx",
+  "name": "@yrjwcharm/react-native-svga-player",
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
+  },
+  "homepage": "https://github.com/yrjwcharm/react-native-svga-player#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yrjwcharm/react-native-svga-player.git"
   },
   "scripts": {
     "codegen-lib": "react-native codegen-lib-harmony --no-safety-check --npm-package-name react-native-ohos-svgaplayer --cpp-output-path ../../harmony/svgaplayer/src/main/cpp/generated --ets-output-path ../../harmony/svgaplayer/src/main/ets/generated --turbo-modules-spec-paths ./src  --arkts-components-spec-paths ./src"
