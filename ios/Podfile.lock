@@ -966,23 +966,15 @@ PODS:
     - ReactCommon/turbomodule/core
     - Yoga
   - react-native-svga-player (1.0.0):
-    - hermes-engine
     - Protobuf (= 3.22.1)
     - RCT-Folly (= 2021.07.22.00)
     - RCTRequired
     - RCTTypeSafety
     - React-Codegen
     - React-Core
-    - React-debug
-    - React-Fabric
-    - React-graphics
-    - React-NativeModulesApple
     - React-RCTFabric
-    - React-utils
-    - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - SVGAPlayer
-    - Yoga
   - React-NativeModulesApple (0.72.5):
     - hermes-engine
     - React-callinvoker
@@ -1348,7 +1340,7 @@ SPEC CHECKSUMS:
   React-logger: 984811296d6ce8fb1c1619cc8752c1029916d917
   react-native-blob-util: 083f4d7e55600ae88dc2ca54fcd74be32d7060f0
   react-native-pdf: 7523afe22e8323584af9ecc8c1a4faaa4340c9c7
-  react-native-svga-player: 3aa8950ecc2c4fba218ddf4ff86258ded4636391
+  react-native-svga-player: 3153a20226dd562e6619ee12c5e9b1b63cc7b3e0
   React-NativeModulesApple: d57608e52c875d2b952b68afd0d8f0543d690c3d
   React-perflogger: cd8886513f68e1c135a1e79d20575c6489641597
   React-RCTActionSheet: 726d2615ca62a77ce3e2c13d87f65379cdc73498

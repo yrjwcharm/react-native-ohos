@@ -8,7 +8,6 @@
 #import <react/renderer/components/RTNSvgaPlayerSpec/Props.h>
 #import <react/renderer/components/RTNSvgaPlayerSpec/RCTComponentViewHelpers.h>
 
-
 #import "SVGAPlayer.h"
 #import "SVGAParser.h"
 
