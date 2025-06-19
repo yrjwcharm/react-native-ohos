@@ -1,131 +1,61 @@
-import React, {useRef} from 'react';
-import {
-  Button,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import RNSvgaPlayer from 'rn-newarch-svga-player';
-const files = [
-  'Goddess',
-  'matteBitmap',
-  'heartbeat',
-  // 'matteRect',
-  // 'mutiMatte',
-];
-const App = () => {
-  const svgaPlayerRef = useRef<RNSvgaPlayer>(null);
-  return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={'dark-content'} />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.welcome}>Svga</Text>
-        <View style={styles.container}>
-          {files.map(f => (
-            <View key={f} style={styles.containerW}>
-              <RNSvgaPlayer
-                style={{width: 150, height: 150}}
-                source={`https://raw.githubusercontent.com/yyued/SVGAPlayer-iOS/master/SVGAPlayer/Samples/${f}.svga`}
-              />
-              <Text>{f}</Text>
-            </View>
-          ))}
-        </View>
-        {/* 播放本地资源： tips:注意 ios svga动画不需要后缀名 harmony和android都需要*/}
-        <RNSvgaPlayer
-          ref={svgaPlayerRef}
-          style={styles.localSvga}
-          source={
-            Platform.OS === 'ios'
-              ? 'homePage_studyPlanner_computer_welcome'
-              : 'homePage_studyPlanner_computer_welcome.svga'
-          }
-          onFinished={() => {
-            __DEV__ && console.log('onFinished');
+/**
+ * Copyright (c) 2017-present, Wonday (@wonday.org)
+ * All rights reserved.
+ *
+ * This source code is licensed under the MIT-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import React from 'react';
+import {StyleSheet, Dimensions, View} from 'react-native';
+import Pdf from 'react-native-pdf';
+
+export default class App extends React.Component {
+  render() {
+    const source = {
+      uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
+      cache: true,
+    };
+    //const source = require('./test.pdf');  // ios only
+    //const source = {uri:'bundle-assets://test.pdf' };
+    //const source = {uri:'file:///sdcard/test.pdf'};
+    //const source = {uri:"data:application/pdf;base64,JVBERi0xLjcKJc..."};
+    //const source = {uri:"content://com.example.blobs/xxxxxxxx-...?offset=0&size=xxx"};
+    //const source = {uri:"blob:xxxxxxxx-...?offset=0&size=xxx"};
+
+    return (
+      <View style={styles.container}>
+        <Pdf
+          source={source}
+          onLoadComplete={numberOfPages => {
+            console.log(`Number of pages: ${numberOfPages}`);
           }}
-          onFrame={(value: number) => {
-            __DEV__ && console.log('frame:', value);
+          onPageChanged={page => {
+            console.log(`Current page: ${page}`);
           }}
-          onPercentage={(value: number) => {
-            __DEV__ && console.log('percentage:', value);
+          onError={error => {
+            console.log(error);
           }}
+          onPressLink={uri => {
+            console.log(`Link pressed: ${uri}`);
+          }}
+          style={styles.pdf}
         />
-        <View style={styles.flexAround}>
-          <Button
-            title="开始动画"
-            onPress={() => {
-              svgaPlayerRef.current?.startAnimation();
-            }}
-          />
-          <Button
-            title="暂停动画"
-            onPress={() => {
-              svgaPlayerRef.current?.pauseAnimation();
-            }}
-          />
-          <Button
-            title="停止动画"
-            onPress={() => {
-              svgaPlayerRef.current?.stopAnimation();
-            }}
-          />
-        </View>
-        <View style={[styles.flexAround, {marginTop: 20}]}>
-          <Button
-            title="手动加载动画"
-            onPress={() => {
-              svgaPlayerRef.current?.load(
-                'https://raw.githubusercontent.com/yyued/SVGAPlayer-iOS/master/SVGAPlayer/Samples/Goddess.svga',
-              );
-            }}
-          />
-          <Button
-            title="指定帧开始"
-            onPress={() => {
-              svgaPlayerRef.current?.stepToFrame(20, true);
-            }}
-          />
-          <Button
-            title="指定百分比开始"
-            onPress={() => {
-              svgaPlayerRef.current?.stepToPercentage(1, true);
-            }}
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
-export default App;
+      </View>
+    );
+  }
+}
+
 const styles = StyleSheet.create({
-  containerW: {
-    width: '45%',
-  },
-  flexAround: {flexDirection: 'row', justifyContent: 'space-around'},
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: 25,
   },
-  localSvga: {
-    width: 150,
-    height: 150,
-    marginTop: 30,
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    marginTop: 80,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  pdf: {
+    flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 });

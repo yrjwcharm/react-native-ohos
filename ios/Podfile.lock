@@ -933,6 +933,38 @@ PODS:
   - React-jsinspector (0.72.5)
   - React-logger (0.72.5):
     - glog
+  - react-native-blob-util (0.22.2):
+    - hermes-engine
+    - RCT-Folly (= 2021.07.22.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-graphics
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - react-native-pdf (6.7.7):
+    - hermes-engine
+    - RCT-Folly (= 2021.07.22.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-graphics
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-svga-player (1.0.0):
     - hermes-engine
     - Protobuf (= 3.22.1)
@@ -1141,6 +1173,8 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-blob-util (from `../node_modules/react-native-blob-util`)
+  - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-svga-player (from `../node_modules/rn-newarch-svga-player`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1230,6 +1264,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-blob-util:
+    :path: "../node_modules/react-native-blob-util"
+  react-native-pdf:
+    :path: "../node_modules/react-native-pdf"
   react-native-svga-player:
     :path: "../node_modules/rn-newarch-svga-player"
   React-NativeModulesApple:
@@ -1308,6 +1346,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 7b950ed139738f2a446a9c0691ef0d07df3fb89e
   React-jsinspector: aef73cbd43b70675f572214d10fa438c89bf11ba
   React-logger: 984811296d6ce8fb1c1619cc8752c1029916d917
+  react-native-blob-util: 083f4d7e55600ae88dc2ca54fcd74be32d7060f0
+  react-native-pdf: 7523afe22e8323584af9ecc8c1a4faaa4340c9c7
   react-native-svga-player: 3aa8950ecc2c4fba218ddf4ff86258ded4636391
   React-NativeModulesApple: d57608e52c875d2b952b68afd0d8f0543d690c3d
   React-perflogger: cd8886513f68e1c135a1e79d20575c6489641597
