@@ -1,4 +1,4 @@
-## **_这是一款使用 ReactNative 加载 Svga 动画的播放器插件_** [Android/ios/harmony 三端统一]
+b## **这是一款使用 ReactNative 加载 Svga 动画的播放器插件** [Android/ios/harmony 三端统一]
 
 > ### 版本：latest
 
@@ -22,18 +22,19 @@
 
 ##### 仓库地址：
 
-**https://github.com/yrjwcharm/react-native-svga-player**
+**https://github.com/yrjwcharm/rn-newarch-svga-player**
+
+**_这里默认你的项目 android/ios 都启用了新架构支持_**
 
 ### 安装
 
-```javascript
-yarn add @yrjwcharm/react-native-svga-player
+`yarn add rn-newarch-svga-player`
 
-yarn add react-native-ohos-svgaplayer
+<br/>
 
-```
+`yarn add react-native-ohos-svgaplayer`
 
-> 为了统一使用 react-native-svga-player 库名导入。你需要把@yrjwcharm/react-native-svga-player 库修改下
+> 为了统一使用 react-native-svga-player 库名导入。你还需要把 rn-newarch-svga-player 库修改下
 
 ```diff
 +  "dependencies": {
@@ -42,8 +43,8 @@ yarn add react-native-ohos-svgaplayer
     "postinstall-postinstall": "^2.1.0",
     "react": "18.2.0",
     "react-native": "0.72.5",
--    "@yrjwcharm/react-native-svga-player":"^1.2.0"
-+   "react-native-svga-player":"npm:@yrjwcharm/react-native-svga-player@1.2.0",
+-    "rn-newarch-svga-player":"^1.0.7"
++   "react-native-svga-player":"npm:rn-newarch-svga-player@1.0.7",
     "react-native-ohos-svgaplayer": "^1.1.7"
   },
 
