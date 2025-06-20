@@ -24,13 +24,20 @@ b## **这是一款使用 ReactNative 加载 Svga 动画的播放器插件** [And
 
 **https://github.com/yrjwcharm/rn-newarch-svga-player**
 
-**_这里默认你的项目 android/ios 都启用了新架构支持_**
+> [!TIP] 注意 ⚠️：这里默认你 android/ios 都启用了新架构 Fabric<https://reactnative.cn/docs/0.72/the-new-architecture/use-app-template> 支持,若需要旧架构支持[请移步这里](https://github.com/yrjwcharm/react-native-svga-player)
 
 ### 安装
 
 `yarn add rn-newarch-svga-player`
 
 `yarn add react-native-ohos-svgaplayer`
+
+ios 需要
+
+````bash
+  cd ios
+  bundle install && bundle exec pod install
+```
 
 > 为了统一使用 react-native-svga-player 库名导入。你还需要把 rn-newarch-svga-player 库修改下，react-native-ohos-svgaplayer 不用修改，因为它已经设置过别名 alias 了
 
@@ -57,7 +64,7 @@ function buildCustomComponent(ctx: ComponentBuilderContext) {
  ...
 }
 ...
-```
+````
 
 导入
 
