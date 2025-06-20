@@ -18,7 +18,7 @@ b## **这是一款使用 ReactNative 加载 Svga 动画的播放器插件** [And
 
 **https://github.com/yrjwcharm/react-native-ohos-svgaplayer**
 
-## react-native Android/Ios
+## react-native Android/iOS
 
 ##### 仓库地址：
 
@@ -30,11 +30,9 @@ b## **这是一款使用 ReactNative 加载 Svga 动画的播放器插件** [And
 
 `yarn add rn-newarch-svga-player`
 
-<br/>
-
 `yarn add react-native-ohos-svgaplayer`
 
-> 为了统一使用 react-native-svga-player 库名导入。你还需要把 rn-newarch-svga-player 库修改下
+> 为了统一使用 react-native-svga-player 库名导入。你还需要把 rn-newarch-svga-player 库修改下，react-native-ohos-svgaplayer 不用修改，因为它已经设置过别名 alias 了
 
 ```diff
 +  "dependencies": {
