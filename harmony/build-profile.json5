@@ -5,13 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "/Users/mac/.ohos/config/default_harmony_lYojn7-eBS_3e2opeaqw3vunFhA3SHP7qduVvYDLllk=.cer",
+          "certpath": "/Users/yanruifeng/.ohos/config/default_harmony_xXBhJ5fdqECxqgTjqxuVlZFfj6divAJhXTkS4LDIUxI=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001AB53002F22334BE904476BDDE672C935B7E799AEC84C6266D85E2F1C1328013A1443AA1F87103",
-          "profile": "/Users/mac/.ohos/config/default_harmony_lYojn7-eBS_3e2opeaqw3vunFhA3SHP7qduVvYDLllk=.p7b",
+          "keyPassword": "0000001B592F7B97B20B7F40BC0404520466DDA6E5E88DD88D952E3893086444EEBED65142D3D1913F26CA",
+          "profile": "/Users/yanruifeng/.ohos/config/default_harmony_xXBhJ5fdqECxqgTjqxuVlZFfj6divAJhXTkS4LDIUxI=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "/Users/mac/.ohos/config/default_harmony_lYojn7-eBS_3e2opeaqw3vunFhA3SHP7qduVvYDLllk=.p12",
-          "storePassword": "0000001AEDAC51B4C9725283B59ED97D0EA387980749350451F9D5C7700318D2A270969EAF5A4D0F31E6"
+          "storeFile": "/Users/yanruifeng/.ohos/config/default_harmony_xXBhJ5fdqECxqgTjqxuVlZFfj6divAJhXTkS4LDIUxI=.p12",
+          "storePassword": "0000001B11330577F21F5CFBE219EBE83F391AAA8A147A7DD813B990C2A48CC455E5F0207C5E4D7BD01AE7"
         }
       }
     ],

@@ -24,7 +24,7 @@ b## **这是一款使用 ReactNative 加载 Svga 动画的播放器插件** [And
 
 **https://github.com/yrjwcharm/rn-newarch-svga-player**
 
-> [!TIP] 注意 ⚠️：这里默认你 android/ios 都启用了新架构 Fabric<https://reactnative.cn/docs/0.72/the-new-architecture/use-app-template> 支持,若需要旧架构支持[请移步这里](https://github.com/yrjwcharm/react-native-svga-player)
+> [!TIP] 注意 ⚠️：这里默认你的项目 android/ios 都启用了新架构 Fabric<https://reactnative.cn/docs/0.72/the-new-architecture/use-app-template> 支持,如需旧架构支持[请移步这里](https://github.com/yrjwcharm/react-native-svga-player)
 
 ### 安装
 
