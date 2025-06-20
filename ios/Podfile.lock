@@ -1091,7 +1091,7 @@ PODS:
     - React-jsi (= 0.72.5)
     - React-logger (= 0.72.5)
     - React-perflogger (= 0.72.5)
-  - rn-newarch-svga-player (1.0.0):
+  - rn-newarch-svga-player (1.0.7):
     - hermes-engine
     - Protobuf (= 3.22.1)
     - RCT-Folly (= 2021.07.22.00)
@@ -1366,7 +1366,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: ab7903607aad767fa6cd95feb910fb11501f9946
   React-utils: 5b4df8692e966fd50e2d75c0f9659e176a292384
   ReactCommon: 82a84765046cde44e4086a762a16a1ec5c3386ca
-  rn-newarch-svga-player: ef8db1419628e110042b9630f15110ba3c09fff5
+  rn-newarch-svga-player: 0782f2d155cecbcbde1120a3c1f45ac1f4eb121a
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SVGAPlayer: 318b85a78b61292d6ae9dfcd651f3f0d1cdadd86
