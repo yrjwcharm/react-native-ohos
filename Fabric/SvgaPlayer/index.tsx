@@ -11,8 +11,6 @@ interface SVGAPlayerProps extends ViewProps {
   source: string;
 }
 interface SVGAPlayerState {
-  loops?: number;
-  clearsAfterStop?: boolean;
   toFrame: number;
   currentState: string;
   toPercentage: number;
@@ -25,13 +23,7 @@ export default class RNSvgaPlayer extends React.Component<
 
   constructor(props: Readonly<SVGAPlayerProps>) {
     super(props);
-    this.state = {
-      loops:0,
-      clearsAfterStop:true,
-      toFrame:-1,
-      toPercentage:-1,
-      currentState:'idle',
-    } as SVGAPlayerState;
+    this.state = {} as SVGAPlayerState;
     this.childRef = React.createRef();
   }
   load(source: string) {
