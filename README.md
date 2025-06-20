@@ -34,7 +34,7 @@ b## **这是一款使用 ReactNative 加载 Svga 动画的播放器插件** [And
 
 ios 需要
 
-````bash
+```bash
   cd ios
   bundle install && bundle exec pod install
 ```
