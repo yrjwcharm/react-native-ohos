@@ -23,33 +23,33 @@ using namespace facebook::react;
 }
   
 
-//-(instancetype)init{
-//    if(self = [super init]) {
-//      _aPlayer = [[SVGAPlayer alloc] init];
-//      _aPlayer.delegate = self;
-//      // _aPlayer.loops = 1;
-//      // _aPlayer.clearsAfterStop = YES;
-//      _aPlayer.clipsToBounds = NO;
-//      _aPlayer.contentMode = UIViewContentModeScaleAspectFit;
-//      [self addSubview:_aPlayer];
-//    }
-//    return self;
-//  }
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    if (self = [super initWithFrame:frame]) {
-        static const auto defaultProps = std::make_shared<const SvgaPlayerViewProps>();
-        _props = defaultProps;
-      _aPlayer = [[SVGAPlayer alloc] init];
-      _aPlayer.delegate = self;
-      // _aPlayer.loops = 1;
-      // _aPlayer.clearsAfterStop = YES;
-      _aPlayer.clipsToBounds = NO;
-      _aPlayer.contentMode = UIViewContentModeScaleAspectFit;
-      [self addSubview:_aPlayer];
-    }
-    return self;
-}
+-(instancetype)init{
+   if(self = [super init]) {
+     _aPlayer = [[SVGAPlayer alloc] init];
+     _aPlayer.delegate = self;
+     // _aPlayer.loops = 1;
+     // _aPlayer.clearsAfterStop = YES;
+     _aPlayer.clipsToBounds = NO;
+     _aPlayer.contentMode = UIViewContentModeScaleAspectFit;
+     [self addSubview:_aPlayer];
+   }
+   return self;
+ }
+// - (instancetype)initWithFrame:(CGRect)frame
+// {
+//     if (self = [super initWithFrame:frame]) {
+//         static const auto defaultProps = std::make_shared<const SvgaPlayerViewProps>();
+//         _props = defaultProps;
+//       _aPlayer = [[SVGAPlayer alloc] init];
+//       _aPlayer.delegate = self;
+//       // _aPlayer.loops = 1;
+//       // _aPlayer.clearsAfterStop = YES;
+//       _aPlayer.clipsToBounds = NO;
+//       _aPlayer.contentMode = UIViewContentModeScaleAspectFit;
+//       [self addSubview:_aPlayer];
+//     }
+//     return self;
+// }
 
 -(void)layoutSubviews
 {

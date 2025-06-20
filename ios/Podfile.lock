@@ -965,16 +965,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-svga-player (1.0.0):
-    - Protobuf (= 3.22.1)
-    - RCT-Folly (= 2021.07.22.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Codegen
-    - React-Core
-    - React-RCTFabric
-    - ReactCommon/turbomodule/core
-    - SVGAPlayer
   - React-NativeModulesApple (0.72.5):
     - hermes-engine
     - React-callinvoker
@@ -1101,6 +1091,16 @@ PODS:
     - React-jsi (= 0.72.5)
     - React-logger (= 0.72.5)
     - React-perflogger (= 0.72.5)
+  - rn-newarch-svga-player (1.0.0):
+    - Protobuf (= 3.22.1)
+    - RCT-Folly (= 2021.07.22.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-RCTFabric
+    - ReactCommon/turbomodule/core
+    - SVGAPlayer
   - SocketRocket (0.6.1)
   - SSZipArchive (2.4.3)
   - SVGAPlayer (2.5.7):
@@ -1167,7 +1167,6 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-blob-util (from `../node_modules/react-native-blob-util`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
-  - react-native-svga-player (from `../node_modules/rn-newarch-svga-player`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -1186,6 +1185,7 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - rn-newarch-svga-player (from `../node_modules/rn-newarch-svga-player`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1260,8 +1260,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-blob-util"
   react-native-pdf:
     :path: "../node_modules/react-native-pdf"
-  react-native-svga-player:
-    :path: "../node_modules/rn-newarch-svga-player"
   React-NativeModulesApple:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios"
   React-perflogger:
@@ -1298,6 +1296,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/utils"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  rn-newarch-svga-player:
+    :path: "../node_modules/rn-newarch-svga-player"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1340,7 +1340,6 @@ SPEC CHECKSUMS:
   React-logger: 984811296d6ce8fb1c1619cc8752c1029916d917
   react-native-blob-util: 083f4d7e55600ae88dc2ca54fcd74be32d7060f0
   react-native-pdf: 7523afe22e8323584af9ecc8c1a4faaa4340c9c7
-  react-native-svga-player: 3153a20226dd562e6619ee12c5e9b1b63cc7b3e0
   React-NativeModulesApple: d57608e52c875d2b952b68afd0d8f0543d690c3d
   React-perflogger: cd8886513f68e1c135a1e79d20575c6489641597
   React-RCTActionSheet: 726d2615ca62a77ce3e2c13d87f65379cdc73498
@@ -1359,6 +1358,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: ab7903607aad767fa6cd95feb910fb11501f9946
   React-utils: 5b4df8692e966fd50e2d75c0f9659e176a292384
   ReactCommon: 82a84765046cde44e4086a762a16a1ec5c3386ca
+  rn-newarch-svga-player: 5f4bdb960114ddd32975839deff297a46edaf00a
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SVGAPlayer: 318b85a78b61292d6ae9dfcd651f3f0d1cdadd86
