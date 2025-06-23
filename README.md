@@ -32,12 +32,6 @@
 
 `yarn add react-native-ohos-svgaplayer`
 
-android 需要
-
-```bash
- ./gradlew generateCodegenArtifactsFromSchema
-
-```
 
 ios 需要
 
