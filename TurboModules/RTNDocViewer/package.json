@@ -15,15 +15,7 @@
         "src/*"
     ],
     "harmony": {
-        "alias": "rtn-docviewer",
-        "codegenConfig": [
-            {
-              "version": 2,
-              "specPaths": [
-                  "./src/specs"
-              ]
-            }
-          ]
+        "alias": "rtn-docviewer"
     },
     "keywords": [],
     "license": "ISC",
