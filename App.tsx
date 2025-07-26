@@ -9,13 +9,16 @@ import {
 } from 'react-native';
 import {RTNCalculator} from 'rtn-calculator';
 import OpenFile from 'rtn-docviewer';
+import {getBase64ImagePath} from './imgbase64';
 const App = () => {
   const [result, setResult] = useState<number | null>(null);
   const handPress = () => {
-    OpenFile.openDoc(
+    OpenFile.openDocb64(
       [
         {
-          url: 'https://calibre-ebook.com/downloads/demos/demo.docx', // Local "file://" + filepath
+          base64: getBase64ImagePath(),
+          fileName: 'sample.png',
+          fileType: 'png',
         },
       ],
       (error, url) => {
