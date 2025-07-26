@@ -173,6 +173,8 @@ export class DocViewerTurboModule extends TurboModule {
           this.shareFile(filePath, fileType, callback)
         })
         downloadTask.on("progress", (receivedSize: number, totalSize: number) => {
+          this.ctx?.rnInstance?.emitDeviceEvent("RNDownloaderProgress", { progress: (receivedSize/totalSize) *100 })
+
         })
         downloadTask.on('fail', (err) => {
           this.removeFile(filePath)

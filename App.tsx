@@ -1,8 +1,25 @@
-import React, {useState} from 'react';
-import {Button, SafeAreaView, StatusBar, StyleSheet} from 'react-native';
-import OpenFile from 'react-native-ohos-docviewer';
+import React, {useEffect} from 'react';
+import {
+  Button,
+  DeviceEventEmitter,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+} from 'react-native';
+import OpenFile from 'react-native-doc-viewer';
 import {getBase64ImagePath} from './imgbase64';
 const App = () => {
+  useEffect(() => {
+    //监听下载进度事件
+    DeviceEventEmitter.addListener('RNDownloaderProgress', event => {
+      // 添加事件处理
+      console.log('Download progress:', event.progress);
+    });
+    return () => {
+      // 清理事件监听器
+      DeviceEventEmitter.removeAllListeners('RNDownloaderProgress');
+    };
+  }, []);
   const previewImage = () => {
     OpenFile.openDoc(
       [
