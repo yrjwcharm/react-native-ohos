@@ -7,9 +7,29 @@ import {
   StyleSheet,
   Text,
 } from 'react-native';
-import {RTNCalculator} from '@rtn-calculator';
+import {RTNCalculator} from 'rtn-calculator';
+import OpenFile from 'rtn-docviewer';
 const App = () => {
   const [result, setResult] = useState<number | null>(null);
+  const handPress = () => {
+    OpenFile.openDoc(
+      [
+        {
+          url: 'https://www.huf-haus.com/fileadmin/Bilder/Header/ART_3/Header_HUF_Haus_ART_3___1_.jpg', // Local "file://" + filepath
+          fileName: 'sample',
+          cache: false,
+          fileType: 'jpg',
+        },
+      ],
+      (error, url) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log(url);
+        }
+      },
+    );
+  };
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
@@ -24,6 +44,7 @@ const App = () => {
             setResult(value ?? 0);
           }}
         />
+        <Button onPress={handPress} title="预览图片" />
       </View>
     </SafeAreaView>
   );

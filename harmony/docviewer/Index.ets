@@ -1,4 +1,2 @@
 
-export { SvgaPlayerView } from './src/main/ets/components/SvgaPlayerView'
-
-export { SvgaPlayerPackage } from './src/main/ets/SvgaPlayerPackage'
+export { DocViewerPackage } from './src/main/ets/DocViewerPackage'

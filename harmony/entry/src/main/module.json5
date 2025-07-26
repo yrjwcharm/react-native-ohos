@@ -34,12 +34,6 @@
         ]
       }
     ],
-    "requestPermissions": [
-      {
-        //配置RN harmony端摇一摇权限
-        "name": "ohos.permission.ACCELEROMETER"
-      }
-    ],
     "extensionAbilities": [
       {
         "name": "EntryBackupAbility",
@@ -60,6 +54,18 @@
             "value": "true"
           }
         ]
+      }
+    ],
+    "requestPermissions": [
+      {
+        "name" : "ohos.permission.INTERNET"
+      },
+      {
+        "name" : "ohos.permission.GET_NETWORK_INFO"
+      },
+      {
+        //配置RN harmony端摇一摇权限
+        "name": "ohos.permission.ACCELEROMETER"
       }
     ]
   }
