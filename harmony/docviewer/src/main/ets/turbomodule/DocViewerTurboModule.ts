@@ -234,7 +234,7 @@ export class DocViewerTurboModule extends TurboModule{
     // })
     filePreview.canPreview(this.ctx.uiAbilityContext, uri).then((result) => {
       filePreview.openPreview(this.ctx.uiAbilityContext, this.generatePreviewInfo(uri)).then(() => {
-        callback('Succeeded in opening preview', uri)
+        callback('', uri)
       }).catch((err: BusinessError) => {
         callback(`Failed to open preview, err.code = ${err.code}, err.message = ${err.message}`)
       });

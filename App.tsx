@@ -21,7 +21,7 @@ const App = () => {
       ],
       (error, url) => {
         if (error) {
-          console.error(error);
+          // console.error(error);
         } else {
           console.log(url);
         }
