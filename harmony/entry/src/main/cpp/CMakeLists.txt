@@ -66,9 +66,12 @@ configure_file(
   ${RNOH_CPP_DIR}/third-party/folly/CMake/folly-config.h.cmake
   ${RNOH_CPP_DIR}/third-party/folly/folly/folly-config.h
 )
+add_subdirectory("${OH_MODULE_DIR}/@react-native-ohos/react-native-doc-viewer/src/main/cpp" ./docviewer)
+
 file(GLOB GENERATED_CPP_FILES "./generated/*.cpp")
 # 添加rnoh动态共享包
 add_library(rnoh SHARED
+    ${GENERATED_CPP_FILES}
     "${RNOH_CPP_DIR}/RNOHOther.cpp"
     "${RNOH_CPP_DIR}/third-party/folly/folly/lang/SafeAssert.cpp"
     )
@@ -133,5 +136,6 @@ add_library(rnoh_app SHARED
 )
 
 target_link_libraries(rnoh_app PUBLIC rnoh)
+target_link_libraries(rnoh_app PUBLIC rnoh_docviewer)
 
 target_compile_options(rnoh_app PUBLIC ${folly_compile_options} -DRAW_PROPS_ENABLED -std=c++17)

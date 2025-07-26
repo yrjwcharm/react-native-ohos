@@ -3,7 +3,6 @@ import { GeneratedPackage } from './GeneratedPackage';
 
 export function createRNPackages(ctx: RNPackageContext): RNPackage[] {
   return [
-    new GeneratedPackage(ctx)
-
+    new GeneratedPackage(ctx),
   ];
 }

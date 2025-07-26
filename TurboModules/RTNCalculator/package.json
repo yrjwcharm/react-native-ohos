@@ -13,7 +13,7 @@
         "src/*"
     ],
     "harmony": {
-        "alias": "@rtn-calculator",
+        "alias": "rtn-calculator",
         "codegenConfig": [
             {
                 "specPaths": [

@@ -26,7 +26,8 @@
             "caseSensitiveCheck": true,
             "useNormalizedOHMUrl": true
           }
-        }
+        },
+        "targetSdkVersion": "5.1.1(19)"
       }
     ],
     "buildModeSet": [
@@ -52,8 +53,8 @@
       ]
     },
     {
-      "name": "svgaplayer",
-      "srcPath": "./svgaplayer",
+      "name": "docviewer",
+      "srcPath": "./docviewer"
     }
   ]
 }
