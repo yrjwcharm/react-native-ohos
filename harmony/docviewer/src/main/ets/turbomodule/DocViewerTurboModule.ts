@@ -34,7 +34,6 @@ export class DocViewerTurboModule extends TurboModule {
   }
 
   async saveBase64(base64: string, filePath: string) {
-    console.log(`saveBase64 start filePath:${filePath}`)
     const baseHelper = new util.Base64Helper()
     const buf = baseHelper.decodeSync(base64).buffer as ArrayBuffer
     const file = await fileIo.open(filePath, fileIo.OpenMode.READ_WRITE | fileIo.OpenMode.CREATE)
@@ -44,12 +43,11 @@ export class DocViewerTurboModule extends TurboModule {
 
   async openDocb64(fileParams: FileInfo[], callback: Function) {
     console.log(`openDocb64 start params:${JSON.stringify(fileParams)}`)
-    const { base64, url, fileName, fileType, cache } = fileParams[0]
+    const { base64, fileName, fileType, cache } = fileParams[0]
     if (base64 && fileName && fileType) {
       try {
         const filePath = this.getFilePath(fileName, fileType)
         if (cache) {
-          console.log(`try to use cache base64 file`)
           this.useCache(fileType, '', fileName, callback, async () => {
             await this.saveBase64(base64, filePath)
             this.shareFile(filePath, fileType, callback)
@@ -59,7 +57,6 @@ export class DocViewerTurboModule extends TurboModule {
           this.shareFile(filePath, fileType, callback)
         }
       } catch (e) {
-        console.log(`openDocb64 err：${JSON.stringify(e)}`)
         callback(`openDocb64 execute failed`)
       }
     } else {
@@ -68,7 +65,6 @@ export class DocViewerTurboModule extends TurboModule {
   }
 
   async openDocBinaryinUrl(fileParams: FileInfo[], callback: Function) {
-    console.log(`openDocBinaryinUrl start params:${JSON.stringify(fileParams)}`)
     let httpRequest = http.createHttp();
     const { url, fileName, fileType, cache } = fileParams[0]
     try {
@@ -111,7 +107,6 @@ export class DocViewerTurboModule extends TurboModule {
   }
 
   async openDoc(fileParams: FileInfo[], callback: Function) {
-    console.log(`openDoc start params:${JSON.stringify(fileParams)}`)
     const { url, fileName, fileType, cache } = fileParams[0]
     try {
       if (url) {
@@ -143,17 +138,14 @@ export class DocViewerTurboModule extends TurboModule {
   }
 
   async useCache(fileType: string, url: string, fileName: string, callback: Function, notExistsFn?: Function) {
-    console.log(`useCache start`)
     const filePath = this.getFilePath(fileName, fileType, url)
     const isExists = await fileIo.access(filePath)
     if (isExists) {
-      console.log(`useCache isExists:${filePath}`)
       this.shareFile(filePath, fileType, callback)
     } else {
       if (notExistsFn) {
         notExistsFn()
       } else {
-        console.log(`not exists ${filePath}, to download`)
         this.download(url, fileType, fileName, callback)
       }
     }
@@ -163,16 +155,13 @@ export class DocViewerTurboModule extends TurboModule {
     try {
       const isExists = await fileIo.access(filePath)
       if (isExists) {
-        console.log(`isExists ${filePath}, to remove`)
         await fileIo.unlink(filePath)
       }
     } catch (err) {
-      console.log(`removeFile err:${JSON.stringify(err)}`)
     }
   }
 
   async download(url: string, fileType: string, fileName: string, callback: Function) {
-    console.log(`download start url:${url}`)
     const filePath = this.getFilePath(fileName, fileType, url)
     const context = this.ctx.uiAbilityContext
     try {
@@ -180,35 +169,29 @@ export class DocViewerTurboModule extends TurboModule {
         url,
         filePath
       }).then(downloadTask => {
-        console.log(`downloadTask start`)
         downloadTask.on('complete', () => {
-          console.log(`download complete:${fileName}`)
           this.shareFile(filePath, fileType, callback)
         })
         downloadTask.on("progress", (receivedSize: number, totalSize: number) => {
-          console.log('下载进度....', receivedSize, totalSize)
         })
         downloadTask.on('fail', (err) => {
-          console.log(`download fail:${err}`)
           this.removeFile(filePath)
-          callback(`download fail`)
+          callback(`download fail:${err}`)
         })
       }).catch(err => {
-        console.log(`Invoke catch downloadTask failed:${JSON.stringify(err)}`)
+        callback(`Invoke catch downloadTask failed:${JSON.stringify(err)}`)
       })
     } catch (err) {
-      console.log(`Invoke catch downloadTask failed:${JSON.stringify(err)}`)
       if (err.code === 13400002) {
         this.shareFile(filePath, fileType, callback)
       } else {
-        callback(`download fail`)
+        callback(`download fail:${JSON.stringify(err)}`)
       }
     }
   }
 
   shareFile(filePath: string, fileType: string, callback: Function) {
     const uri = fileUri.getUriFromPath(filePath)
-    console.log(`shareFile uri: ${uri}, filePath: ${filePath}`)
     this.start(uri, fileType, callback)
   }
 
