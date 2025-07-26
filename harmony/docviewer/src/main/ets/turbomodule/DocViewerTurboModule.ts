@@ -1,11 +1,12 @@
 import {TurboModule, TurboModuleContext} from '@rnoh/react-native-openharmony/ts';
-import Log from '../Log'
-import fs from '@ohos.file.fs'
 import util from '@ohos.util'
-import { fileUri } from '@kit.CoreFileKit';
+import { fileIo, fileUri } from '@kit.CoreFileKit';
 import { getMimeType } from '../mime'
 import request from '@ohos.request';
-import { wantConstant } from '@kit.AbilityKit';
+import wantConstant from '@ohos.ability.wantConstant';
+import { Mime } from '../../utils/Mime';
+import { filePreview } from '@kit.PreviewKit';
+import { BusinessError } from '@kit.BasicServicesKit';
 
 interface FileInfo{
   url?: string,
@@ -24,30 +25,26 @@ export class DocViewerTurboModule extends TurboModule{
   }
   createTempDir() {
     const context = this.ctx.uiAbilityContext
-    let filesDir = context.tempDir + `/docViewerTemp`
+    let filesDir = context.filesDir + `/docViewerTemp`
     this.tempDir = filesDir
-    fs.mkdir(filesDir).then(() => {
-      Log.debug(`mkdir succeed`)
-    }).catch((err) => {
-      Log.debug(`mkdir failed with error:${JSON.stringify(err)}`)
-    })
+    fileIo.mkdir(filesDir)
   }
   async saveBase64(base64: string, filePath: string){
-    Log.debug(`saveBase64 start filePath:${filePath}`)
+    console.log(`saveBase64 start filePath:${filePath}`)
     const baseHelper = new util.Base64Helper()
     const buf = baseHelper.decodeSync(base64).buffer as ArrayBuffer
-    const file = await fs.open(filePath, fs.OpenMode.READ_WRITE | fs.OpenMode.CREATE)
-    await fs.write(file.fd, buf)
-    fs.close(file)
+    const file = await fileIo.open(filePath, fileIo.OpenMode.READ_WRITE | fileIo.OpenMode.CREATE)
+    await fileIo.write(file.fd, buf)
+    fileIo.close(file)
   }
   async openDocb64(fileParams: FileInfo[], callback: Function) {
-    Log.debug(`openDocb64 start params:${JSON.stringify(fileParams)}`)
+    console.log(`openDocb64 start params:${JSON.stringify(fileParams)}`)
     const { base64, url, fileName, fileType, cache } = fileParams[0]
     if (base64 && fileName && fileType) {
       try{
         const filePath = this.getFilePath(fileName)
         if (cache) {
-          Log.debug(`try to use cache base64 file`)
+          console.log(`try to use cache base64 file`)
           this.useCache(fileType, '', fileName, callback, async () => {
             await this.saveBase64(base64, filePath)
             this.shareFile(filePath, fileType, callback)
@@ -57,7 +54,7 @@ export class DocViewerTurboModule extends TurboModule{
           this.shareFile(filePath, fileType, callback)
         }
       } catch (e) {
-        Log.debug(`openDocb64 err：${JSON.stringify(e)}`)
+        console.log(`openDocb64 err：${JSON.stringify(e)}`)
         callback(`openDocb64 execute failed`)
       }
     } else {
@@ -65,7 +62,7 @@ export class DocViewerTurboModule extends TurboModule{
     }
   }
   async openDocBinaryinUrl(fileParams: FileInfo[], callback: Function) {
-    Log.debug(`openDocBinaryinUrl start params:${JSON.stringify(fileParams)}`)
+    console.log(`openDocBinaryinUrl start params:${JSON.stringify(fileParams)}`)
     const { url, fileName, fileType, cache } = fileParams[0]
     try{
       if (url) {
@@ -82,7 +79,7 @@ export class DocViewerTurboModule extends TurboModule{
     }
   }
   async openDoc(fileParams: FileInfo[], callback: Function) {
-    Log.debug(`openDoc start params:${JSON.stringify(fileParams)}`)
+    console.log(`openDoc start params:${JSON.stringify(fileParams)}`)
     const { url, fileName, fileType, cache } = fileParams[0]
     try{
       if (url) {
@@ -99,7 +96,6 @@ export class DocViewerTurboModule extends TurboModule{
     }
   }
   getFilePath(fileName: string, url?: string) {
-    const context = this.ctx.uiAbilityContext
     let filedDir = this.tempDir
     if (fileName) {
       return `${filedDir}/${fileName}`
@@ -107,66 +103,68 @@ export class DocViewerTurboModule extends TurboModule{
     if (url) {
       const urlSplit = url?.split('/')
       const name = urlSplit[urlSplit.length - 1]
-      Log.debug(`getFilePath name:${name}`)
+      console.log(`getFilePath name:${name}`)
       const filePath = filedDir + `/${name}`
       return filePath
     }
     return ''
   }
   async useCache(fileType: string, url: string, fileName: string, callback: Function, notExistsFn?: Function) {
-    Log.debug(`useCache start`)
+    console.log(`useCache start`)
     const filePath = this.getFilePath(fileName, url)
-    const isExists = await fs.access(filePath)
+    const isExists = await fileIo.access(filePath)
     if (isExists) {
-      Log.debug(`useCache isExists:${filePath}`)
+      console.log(`useCache isExists:${filePath}`)
       this.shareFile(filePath, fileType, callback)
     } else {
       if (notExistsFn) {
         notExistsFn()
       } else {
-        Log.debug(`not exists ${filePath}, to download`)
+        console.log(`not exists ${filePath}, to download`)
         this.download(url, fileType, fileName, callback)
       }
     }
   }
   async removeFile(filePath: string) {
     try{
-      const isExists = await fs.access(filePath)
+      const isExists = await fileIo.access(filePath)
       if (isExists) {
-        Log.debug(`isExists ${filePath}, to remove`)
-        await fs.unlink(filePath)
+        console.log(`isExists ${filePath}, to remove`)
+        await fileIo.unlink(filePath)
       }
     } catch (err) {
-      Log.debug(`removeFile err:${JSON.stringify(err)}`)
+      console.log(`removeFile err:${JSON.stringify(err)}`)
     }
   }
   async download(url: string, fileType: string, fileName: string, callback: Function) {
-    Log.debug(`download start url:${url}`)
+    console.log(`download start url:${url}`)
     const filePath = this.getFilePath(fileName, url)
-    this.removeFile(filePath)
     const context = this.ctx.uiAbilityContext
     try{
       request.downloadFile(context, {
         url,
-        filePath
+        filePath,
+        enableMetered: true
       }).then(downloadTask => {
-        Log.debug(`downloadTask start`)
+        console.log(`downloadTask start`)
         downloadTask.on('complete', () => {
-          Log.debug(`download complete:${fileName}`)
+          console.log(`download complete:${fileName}`)
           this.shareFile(filePath, fileType, callback)
         })
+        downloadTask.on("progress",(receivedSize: number, totalSize: number)=>{
+          console.log('下载进度....',receivedSize,totalSize)
+        })
         downloadTask.on('fail', () => {
-          Log.debug(`download fail:${fileName}`)
+          console.log(`download fail:${fileName}`)
           this.removeFile(filePath)
           callback(`download fail`)
         })
       }).catch(err => {
-        Log.debug(`Invoke catch downloadTask failed:${JSON.stringify(err)}`)
+        console.log(`Invoke catch downloadTask failed:${JSON.stringify(err)}`)
       })
     } catch (err) {
-      Log.debug(`Invoke catch downloadTask failed:${JSON.stringify(err)}`)
+      console.log(`Invoke catch downloadTask failed:${JSON.stringify(err)}`)
       if (err.code === 13400002) {
-        Log.debug(`file is exists:${fileName}`)
         this.shareFile(filePath, fileType, callback)
       } else {
         callback(`download fail`)
@@ -175,26 +173,46 @@ export class DocViewerTurboModule extends TurboModule{
   }
   shareFile(filePath: string, fileType: string, callback: Function) {
     const uri = fileUri.getUriFromPath(filePath)
-    Log.debug(`shareFile uri: ${uri}, filePath: ${filePath}`)
+    console.log(`shareFile uri: ${uri}, filePath: ${filePath}`)
     this.start(uri, fileType, callback)
   }
+  generatePreviewInfo(uri: string): filePreview.PreviewInfo {
+    let fileName = Mime.getFileUri(uri).name;
+    let fileExtention = Mime.getFileExtention(fileName);
+    let mimeType = getMimeType(fileExtention);
+    let previewInfo: filePreview.PreviewInfo = {
+      title: fileName,
+      uri: uri,
+      mimeType: mimeType
+    };
+    return previewInfo;
+  }
+
   start(uri: string, fileType: string, callback: Function) {
-    const mimeType = getMimeType(fileType)
-    const want = {
-      flags: wantConstant.Flags.FLAG_AUTH_WRITE_URI_PERMISSION | wantConstant.Flags.FLAG_AUTH_READ_URI_PERMISSION,
-      action: 'ohos.want.action.viewData',
-      uri,
-      type: mimeType
-    }
-    const context = this.ctx.uiAbilityContext
-    Log.debug(`share want params:${JSON.stringify(want)}`)
-    context.startAbility(want, (err, data) => {
-      if (err.code !== 0) {
-        Log.debug(`share file err:${JSON.stringify(err)}`)
-        callback(`want startAbility err:${JSON.stringify(err)}`)
-      } else {
-        callback('', uri)
-      }
-    })
+    // const want = {
+    //   flags: wantConstant.Flags.FLAG_AUTH_WRITE_URI_PERMISSION | wantConstant.Flags.FLAG_AUTH_READ_URI_PERMISSION,
+    //   action: 'ohos.want.action.viewData',
+    //   uri,
+    //   type: mimeType
+    // }
+    // const context = this.ctx.uiAbilityContext
+    // console.log(`share want params:${JSON.stringify(want)}`)
+    // context.startAbility(want, (err, data) => {
+    //   if (err.code !== 0) {
+    //     console.log(`share file err:${JSON.stringify(err)}`)
+    //     callback(`want startAbility err:${JSON.stringify(err)}`)
+    //   } else {
+    //     callback('', uri)
+    //   }
+    // })
+    filePreview.canPreview(this.ctx.uiAbilityContext, uri).then((result) => {
+      filePreview.openPreview(this.ctx.uiAbilityContext, this.generatePreviewInfo(uri)).then(() => {
+        console.info('Succeeded in opening preview');
+      }).catch((err: BusinessError) => {
+        console.error(`Failed to open preview, err.code = ${err.code}, err.message = ${err.message}`);
+      });
+    }).catch((err: BusinessError) => {
+      console.error(`Failed to obtain the result of whether it can be previewed, err.code = ${err.code}, err.message = ${err.message}`);
+    });
   }
 }

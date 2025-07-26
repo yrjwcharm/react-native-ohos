@@ -15,10 +15,7 @@ const App = () => {
     OpenFile.openDoc(
       [
         {
-          url: 'https://www.huf-haus.com/fileadmin/Bilder/Header/ART_3/Header_HUF_Haus_ART_3___1_.jpg', // Local "file://" + filepath
-          fileName: 'sample',
-          cache: false,
-          fileType: 'jpg',
+          url: 'https://calibre-ebook.com/downloads/demos/demo.docx', // Local "file://" + filepath
         },
       ],
       (error, url) => {
