@@ -7,6 +7,7 @@ import { Mime } from '../../utils/Mime';
 import { filePreview } from '@kit.PreviewKit';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { Want, wantConstant } from '@kit.AbilityKit';
+import { http } from "@kit.NetworkKit";
 
 interface FileInfo{
   url?: string,
@@ -63,13 +64,38 @@ export class DocViewerTurboModule extends TurboModule{
   }
   async openDocBinaryinUrl(fileParams: FileInfo[], callback: Function) {
     console.log(`openDocBinaryinUrl start params:${JSON.stringify(fileParams)}`)
+    let httpRequest = http.createHttp();
     const { url, fileName, fileType, cache } = fileParams[0]
     try{
       if (url) {
         if (cache) {
           this.useCache(fileType, url, fileName, callback)
         } else {
-          await this.download(url, fileType, fileName, callback)
+          httpRequest.request(url, {
+            expectDataType: http.HttpDataType.ARRAY_BUFFER,
+            method: http.RequestMethod.GET,
+            connectTimeout: 60000,
+            readTimeout: 60000
+          },
+            (err: BusinessError, data: http.HttpResponse) => {
+              if (err) {
+                callback?.(err);
+                return
+              }
+              if (data.result instanceof ArrayBuffer) {
+                let imageBuffer = data.result as ArrayBuffer;
+                const filePath = this.getFilePath(fileName, url)
+                let tempFile = fileIo.openSync(filePath, fileIo.OpenMode.CREATE | fileIo.OpenMode.READ_WRITE)
+                try {
+                  fileIo.writeSync(tempFile.fd, imageBuffer)
+                  fileIo.close(tempFile.fd)
+                  this.shareFile(filePath, fileType, callback)
+                } catch (err) {
+                   callback?.(err);
+                  return
+                }
+              }
+            })
         }
       } else {
         callback(`Requires parameters: url`)
@@ -143,8 +169,7 @@ export class DocViewerTurboModule extends TurboModule{
     try{
       request.downloadFile(context, {
         url,
-        filePath,
-        enableMetered: true
+        filePath
       }).then(downloadTask => {
         console.log(`downloadTask start`)
         downloadTask.on('complete', () => {
@@ -154,8 +179,8 @@ export class DocViewerTurboModule extends TurboModule{
         downloadTask.on("progress",(receivedSize: number, totalSize: number)=>{
           console.log('下载进度....',receivedSize,totalSize)
         })
-        downloadTask.on('fail', () => {
-          console.log(`download fail:${fileName}`)
+        downloadTask.on('fail', (err) => {
+          console.log(`download fail:${err}`)
           this.removeFile(filePath)
           callback(`download fail`)
         })

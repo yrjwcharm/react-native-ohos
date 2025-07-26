@@ -13,12 +13,10 @@ import {getBase64ImagePath} from './imgbase64';
 const App = () => {
   const [result, setResult] = useState<number | null>(null);
   const handPress = () => {
-    OpenFile.openDocb64(
+    OpenFile.openDocBinaryinUrl(
       [
         {
-          base64: getBase64ImagePath(),
-          fileName: 'sample.png',
-          fileType: 'png',
+          url: 'https://storage.googleapis.com/need-sure/example.xml',
         },
       ],
       (error, url) => {
