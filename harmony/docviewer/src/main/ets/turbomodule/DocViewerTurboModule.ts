@@ -1,4 +1,4 @@
-import {TurboModule, TurboModuleContext} from '@rnoh/react-native-openharmony/ts';
+import { TurboModule, TurboModuleContext } from '@rnoh/react-native-openharmony/ts';
 import util from '@ohos.util'
 import { fileIo, fileUri } from '@kit.CoreFileKit';
 import { getMimeType } from '../mime'
@@ -9,7 +9,7 @@ import { BusinessError } from '@kit.BasicServicesKit';
 import { Want, wantConstant } from '@kit.AbilityKit';
 import { http } from "@kit.NetworkKit";
 
-interface FileInfo{
+interface FileInfo {
   url?: string,
   fileName?: string,
   fileType?: string,
@@ -17,20 +17,23 @@ interface FileInfo{
   base64?: string
 }
 
-export class DocViewerTurboModule extends TurboModule{
+export class DocViewerTurboModule extends TurboModule {
   tempDir: string
+
   constructor(ctx: TurboModuleContext) {
     super(ctx)
     this.ctx = ctx
     this.createTempDir()
   }
+
   createTempDir() {
     const context = this.ctx.uiAbilityContext
     let filesDir = context.filesDir + `/docViewerTemp`
     this.tempDir = filesDir
     fileIo.mkdir(filesDir)
   }
-  async saveBase64(base64: string, filePath: string){
+
+  async saveBase64(base64: string, filePath: string) {
     console.log(`saveBase64 start filePath:${filePath}`)
     const baseHelper = new util.Base64Helper()
     const buf = baseHelper.decodeSync(base64).buffer as ArrayBuffer
@@ -38,12 +41,13 @@ export class DocViewerTurboModule extends TurboModule{
     await fileIo.write(file.fd, buf)
     fileIo.close(file)
   }
+
   async openDocb64(fileParams: FileInfo[], callback: Function) {
     console.log(`openDocb64 start params:${JSON.stringify(fileParams)}`)
     const { base64, url, fileName, fileType, cache } = fileParams[0]
     if (base64 && fileName && fileType) {
-      try{
-        const filePath = this.getFilePath(fileName)
+      try {
+        const filePath = this.getFilePath(fileName, fileType)
         if (cache) {
           console.log(`try to use cache base64 file`)
           this.useCache(fileType, '', fileName, callback, async () => {
@@ -62,12 +66,13 @@ export class DocViewerTurboModule extends TurboModule{
       callback(`Requires parameters: base64, fileName, fileType`)
     }
   }
+
   async openDocBinaryinUrl(fileParams: FileInfo[], callback: Function) {
     console.log(`openDocBinaryinUrl start params:${JSON.stringify(fileParams)}`)
     let httpRequest = http.createHttp();
     const { url, fileName, fileType, cache } = fileParams[0]
-    try{
-      if (url) {
+    try {
+      if (url && fileName && fileType) {
         if (cache) {
           this.useCache(fileType, url, fileName, callback)
         } else {
@@ -84,30 +89,31 @@ export class DocViewerTurboModule extends TurboModule{
               }
               if (data.result instanceof ArrayBuffer) {
                 let imageBuffer = data.result as ArrayBuffer;
-                const filePath = this.getFilePath(fileName, url)
+                const filePath = this.getFilePath(fileName, fileType, url)
                 let tempFile = fileIo.openSync(filePath, fileIo.OpenMode.CREATE | fileIo.OpenMode.READ_WRITE)
                 try {
                   fileIo.writeSync(tempFile.fd, imageBuffer)
                   fileIo.close(tempFile.fd)
                   this.shareFile(filePath, fileType, callback)
                 } catch (err) {
-                   callback?.(err);
+                  callback?.(err);
                   return
                 }
               }
             })
         }
       } else {
-        callback(`Requires parameters: url`)
+        callback(`Requires parameters: url,fileName,fileType`)
       }
     } catch (e) {
       callback(`${JSON.stringify(e)}`)
     }
   }
+
   async openDoc(fileParams: FileInfo[], callback: Function) {
     console.log(`openDoc start params:${JSON.stringify(fileParams)}`)
     const { url, fileName, fileType, cache } = fileParams[0]
-    try{
+    try {
       if (url) {
         if (cache) {
           this.useCache(fileType, url, fileName, callback)
@@ -121,23 +127,24 @@ export class DocViewerTurboModule extends TurboModule{
       callback(`${JSON.stringify(e)}`)
     }
   }
-  getFilePath(fileName: string, url?: string) {
+
+  getFilePath(fileName: string, fileType: string, url?: string) {
     let filedDir = this.tempDir
     if (fileName) {
-      return `${filedDir}/${fileName}`
+      return `${filedDir}/${fileName}${fileType ? '.' + fileType : ''}`
     }
     if (url) {
       const urlSplit = url?.split('/')
       const name = urlSplit[urlSplit.length - 1]
-      console.log(`getFilePath name:${name}`)
-      const filePath = filedDir + `/${name}`
+      const filePath = filedDir + `/${name?.includes('.') ? name : (fileType ? name + `.${fileType}` : '')}`
       return filePath
     }
     return ''
   }
+
   async useCache(fileType: string, url: string, fileName: string, callback: Function, notExistsFn?: Function) {
     console.log(`useCache start`)
-    const filePath = this.getFilePath(fileName, url)
+    const filePath = this.getFilePath(fileName, fileType, url)
     const isExists = await fileIo.access(filePath)
     if (isExists) {
       console.log(`useCache isExists:${filePath}`)
@@ -151,8 +158,9 @@ export class DocViewerTurboModule extends TurboModule{
       }
     }
   }
+
   async removeFile(filePath: string) {
-    try{
+    try {
       const isExists = await fileIo.access(filePath)
       if (isExists) {
         console.log(`isExists ${filePath}, to remove`)
@@ -162,11 +170,12 @@ export class DocViewerTurboModule extends TurboModule{
       console.log(`removeFile err:${JSON.stringify(err)}`)
     }
   }
+
   async download(url: string, fileType: string, fileName: string, callback: Function) {
     console.log(`download start url:${url}`)
-    const filePath = this.getFilePath(fileName, url)
+    const filePath = this.getFilePath(fileName, fileType, url)
     const context = this.ctx.uiAbilityContext
-    try{
+    try {
       request.downloadFile(context, {
         url,
         filePath
@@ -176,8 +185,8 @@ export class DocViewerTurboModule extends TurboModule{
           console.log(`download complete:${fileName}`)
           this.shareFile(filePath, fileType, callback)
         })
-        downloadTask.on("progress",(receivedSize: number, totalSize: number)=>{
-          console.log('下载进度....',receivedSize,totalSize)
+        downloadTask.on("progress", (receivedSize: number, totalSize: number) => {
+          console.log('下载进度....', receivedSize, totalSize)
         })
         downloadTask.on('fail', (err) => {
           console.log(`download fail:${err}`)
@@ -196,11 +205,13 @@ export class DocViewerTurboModule extends TurboModule{
       }
     }
   }
+
   shareFile(filePath: string, fileType: string, callback: Function) {
     const uri = fileUri.getUriFromPath(filePath)
     console.log(`shareFile uri: ${uri}, filePath: ${filePath}`)
     this.start(uri, fileType, callback)
   }
+
   generatePreviewInfo(uri: string): filePreview.PreviewInfo {
     let fileName = Mime.getFileUri(uri).name;
     let fileExtention = Mime.getFileExtention(fileName);
@@ -242,7 +253,8 @@ export class DocViewerTurboModule extends TurboModule{
       callback(`Failed to obtain the result of whether it can be previewed, err.code = ${err.code}, err.message = ${err.message}`);
     });
   }
-   onSharePreview(uri: string, write: boolean = true): Promise<void> {
+
+  onSharePreview(uri: string, write: boolean = true): Promise<void> {
     const context = this.ctx.uiAbilityContext
     let fileName = Mime.getFileUri(uri).name;
     let mimeType = getMimeType(Mime.getFileExtention(fileName));

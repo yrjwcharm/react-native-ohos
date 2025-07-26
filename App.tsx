@@ -1,27 +1,67 @@
 import React, {useState} from 'react';
-import {
-  Button,
-  View,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-} from 'react-native';
-import {RTNCalculator} from 'rtn-calculator';
-import OpenFile from 'rtn-docviewer';
+import {Button, SafeAreaView, StatusBar, StyleSheet} from 'react-native';
+import OpenFile from 'react-native-ohos-docviewer';
 import {getBase64ImagePath} from './imgbase64';
 const App = () => {
-  const [result, setResult] = useState<number | null>(null);
-  const handPress = () => {
+  const previewImage = () => {
+    OpenFile.openDoc(
+      [
+        {
+          url: 'https://i.gsxcdn.com/2015162519_i828z3ug.jpeg',
+        },
+      ],
+      (error: any, url: string) => {
+        if (error) {
+        } else {
+          console.log(url);
+        }
+      },
+    );
+  };
+  const previewWord = () => {
+    OpenFile.openDoc(
+      [
+        {
+          url: 'https://calibre-ebook.com/downloads/demos/demo.docx',
+        },
+      ],
+      (error: any, url: string) => {
+        if (error) {
+        } else {
+          console.log(url);
+        }
+      },
+    );
+  };
+  const previewBase64 = () => {
+    OpenFile.openDocb64(
+      [
+        {
+          base64: getBase64ImagePath(),
+          fileName: 'example',
+          fileType: 'jpg',
+        },
+      ],
+      (error: any, url: string) => {
+        if (error) {
+        } else {
+          console.log(url);
+        }
+      },
+    );
+  };
+  const previewXML = () => {
     OpenFile.openDocBinaryinUrl(
       [
         {
-          url: 'https://storage.googleapis.com/need-sure/example.xml',
+          url: 'https://storage.googleapis.com/need-sure/example',
+          fileName: 'example',
+          fileType: 'xml',
         },
       ],
-      (error, url) => {
+      (error: any, url: string) => {
         if (error) {
-          // console.error(error);
+          console.log('Error opening XML file:', error);
         } else {
           console.log(url);
         }
@@ -31,48 +71,16 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <View>
-        <Text style={{marginLeft: 20, marginTop: 20}}>
-          3+7={result ?? '??'}
-        </Text>
-        <Button
-          title="计算"
-          onPress={async () => {
-            const value = await RTNCalculator?.add(3, 7);
-            setResult(value ?? 0);
-          }}
-        />
-        <Button onPress={handPress} title="预览图片" />
-      </View>
+      <Button onPress={previewImage} title="预览图片" />
+      <Button onPress={previewWord} title="预览word文档" />
+      <Button onPress={previewBase64} title="base64打开预览" />
+      <Button onPress={previewXML} title="预览XML" />
     </SafeAreaView>
   );
 };
 export default App;
 const styles = StyleSheet.create({
-  containerW: {
-    width: '45%',
-  },
-  flexAround: {flexDirection: 'row', justifyContent: 'space-around'},
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  localSvga: {
-    width: 150,
-    height: 150,
-    marginTop: 30,
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    marginTop: 80,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
