@@ -3,10 +3,10 @@ import util from '@ohos.util'
 import { fileIo, fileUri } from '@kit.CoreFileKit';
 import { getMimeType } from '../mime'
 import request from '@ohos.request';
-import wantConstant from '@ohos.ability.wantConstant';
 import { Mime } from '../../utils/Mime';
 import { filePreview } from '@kit.PreviewKit';
 import { BusinessError } from '@kit.BasicServicesKit';
+import { Want, wantConstant } from '@kit.AbilityKit';
 
 interface FileInfo{
   url?: string,
@@ -189,14 +189,16 @@ export class DocViewerTurboModule extends TurboModule{
   }
 
   start(uri: string, fileType: string, callback: Function) {
-    // const want = {
-    //   flags: wantConstant.Flags.FLAG_AUTH_WRITE_URI_PERMISSION | wantConstant.Flags.FLAG_AUTH_READ_URI_PERMISSION,
-    //   action: 'ohos.want.action.viewData',
-    //   uri,
+    // const context = this.ctx.uiAbilityContext
+    // let fileName = Mime.getFileUri(uri).name;
+    // let mimeType = getMimeType(Mime.getFileExtention(fileName));
+    // let want: Want = {
+    //   flags:
+    //     (wantConstant.Flags.FLAG_AUTH_WRITE_URI_PERMISSION | wantConstant.Flags.FLAG_AUTH_READ_URI_PERMISSION) ,
+    //   action:'ohos.want.action.viewData',
+    //   uri: uri,
     //   type: mimeType
     // }
-    // const context = this.ctx.uiAbilityContext
-    // console.log(`share want params:${JSON.stringify(want)}`)
     // context.startAbility(want, (err, data) => {
     //   if (err.code !== 0) {
     //     console.log(`share file err:${JSON.stringify(err)}`)
@@ -207,12 +209,27 @@ export class DocViewerTurboModule extends TurboModule{
     // })
     filePreview.canPreview(this.ctx.uiAbilityContext, uri).then((result) => {
       filePreview.openPreview(this.ctx.uiAbilityContext, this.generatePreviewInfo(uri)).then(() => {
-        console.info('Succeeded in opening preview');
+        callback('Succeeded in opening preview', uri)
       }).catch((err: BusinessError) => {
-        console.error(`Failed to open preview, err.code = ${err.code}, err.message = ${err.message}`);
+        callback(`Failed to open preview, err.code = ${err.code}, err.message = ${err.message}`)
       });
     }).catch((err: BusinessError) => {
-      console.error(`Failed to obtain the result of whether it can be previewed, err.code = ${err.code}, err.message = ${err.message}`);
+      callback(`Failed to obtain the result of whether it can be previewed, err.code = ${err.code}, err.message = ${err.message}`);
     });
+  }
+   onSharePreview(uri: string, write: boolean = true): Promise<void> {
+    const context = this.ctx.uiAbilityContext
+    let fileName = Mime.getFileUri(uri).name;
+    let mimeType = getMimeType(Mime.getFileExtention(fileName));
+    let want: Want = {
+      // 配置被分享文件的读写权限，例如对被分享应用进行读写授权
+      flags: write ?
+        (wantConstant.Flags.FLAG_AUTH_WRITE_URI_PERMISSION | wantConstant.Flags.FLAG_AUTH_READ_URI_PERMISSION) :
+      wantConstant.Flags.FLAG_AUTH_READ_URI_PERMISSION,
+      action: 'ohos.want.action.sendData', //配置分享应用的隐式拉起规则
+      uri: uri,
+      type: mimeType
+    }
+    return context.startAbility(want);
   }
 }
