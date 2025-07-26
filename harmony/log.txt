@@ -2236,3 +2236,19 @@
 12:39:12:587 log after task size: 0
 12:39:12:928 log timer task size: 1
 12:39:13:087 log timer task size: 1
+12:46:59:282 log task queue not empty
+12:46:59:283 log task size: 1
+12:46:59:283 log before pop task size: 1
+12:46:59:283 log after task size: 0
+12:46:59:300 log task queue not empty
+12:46:59:300 log task size: 1
+12:46:59:300 log before pop task size: 1
+12:46:59:300 log after task size: 0
+12:46:59:317 log task queue not empty
+12:46:59:317 log task size: 1
+12:46:59:317 log before pop task size: 1
+12:46:59:317 log after task size: 0
+12:46:59:763 log timer task size: 1
+12:46:59:788 log timer task size: 1
+12:46:59:800 log timer task size: 1
+12:46:59:820 log timer task size: 1
