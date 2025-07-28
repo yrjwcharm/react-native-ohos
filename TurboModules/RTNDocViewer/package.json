@@ -17,6 +17,19 @@
     "harmony": {
         "alias": "rtn-docviewer"
     },
+    "codegenConfig": {
+        "name": "NativeDocViewerSpec",
+        "type": "modules",
+        "jsSrcsDir": "./src/specs",
+        "android": {
+          "javaPackageName": "com.nativedocviewer" 
+        },
+        "ios":{
+        "modulesProvider": {
+          "RNDocViewer": "RCTNativeDocViewer"
+        }
+      }
+    },
     "keywords": [],
     "license": "ISC",
     "main": "index.ts",

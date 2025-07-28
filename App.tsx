@@ -2,22 +2,36 @@ import React, {useEffect} from 'react';
 import {
   Button,
   DeviceEventEmitter,
+  NativeEventEmitter,
+  NativeModules,
   SafeAreaView,
   StatusBar,
   StyleSheet,
 } from 'react-native';
-import OpenFile from 'react-native-doc-viewer';
+import OpenFile from 'rtn-docviewer';
 import {getBase64ImagePath} from './imgbase64';
 const App = () => {
+  //[TIP:]两种监听下载进度事件
   useEffect(() => {
     //监听下载进度事件
-    DeviceEventEmitter.addListener('RNDownloaderProgress', event => {
-      // 添加事件处理
-      console.log('Download progress:', event.progress);
-    });
+    const progressSubscription = DeviceEventEmitter.addListener(
+      'RNDownloaderProgress',
+      event => {
+        // 添加事件处理
+        console.log('Download progress:', event.progress);
+      },
+    );
+    // const eventEmitter = new NativeEventEmitter(NativeModules.RNDocViewer);
+    // const subscription = eventEmitter.addListener(
+    //   'RNDownloaderProgress',
+    //   event => {
+    //     console.log('Download progress:', event.progress);
+    //   },
+    // );
     return () => {
       // 清理事件监听器
-      DeviceEventEmitter.removeAllListeners('RNDownloaderProgress');
+      progressSubscription && progressSubscription.remove();
+      // subscription && subscription.remove();
     };
   }, []);
   const previewImage = () => {
@@ -25,10 +39,12 @@ const App = () => {
       [
         {
           url: 'https://i.gsxcdn.com/2015162519_i828z3ug.jpeg',
+          cache: true,
         },
       ],
       (error: any, url: string) => {
         if (error) {
+          console.error('Error opening image file:', error);
         } else {
           console.log(url);
         }
@@ -40,6 +56,7 @@ const App = () => {
       [
         {
           url: 'https://calibre-ebook.com/downloads/demos/demo.docx',
+          cache: false,
         },
       ],
       (error: any, url: string) => {
@@ -57,10 +74,12 @@ const App = () => {
           base64: getBase64ImagePath(),
           fileName: 'example',
           fileType: 'jpg',
+          cache: true,
         },
       ],
-      (error: any, url: string) => {
+      (error: string, url: string) => {
         if (error) {
+          console.error('Error opening base64 file:', error);
         } else {
           console.log(url);
         }
@@ -74,11 +93,12 @@ const App = () => {
           url: 'https://storage.googleapis.com/need-sure/example',
           fileName: 'example',
           fileType: 'xml',
+          cache: false,
         },
       ],
       (error: any, url: string) => {
         if (error) {
-          console.log('Error opening XML file:', error);
+          console.error('Error opening XML file:', error);
         } else {
           console.log(url);
         }
