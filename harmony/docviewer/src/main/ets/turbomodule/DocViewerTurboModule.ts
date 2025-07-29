@@ -67,36 +67,46 @@ export class DocViewerTurboModule extends TurboModule {
   async openDocBinaryinUrl(fileParams: FileInfo[], callback: Function) {
     let httpRequest = http.createHttp();
     const { url, fileName, fileType, cache } = fileParams[0]
+    const filePath = this.getFilePath(fileName, fileType, url);
+    const chunks: ArrayBuffer[] = []; // 存储所有数据块
     try {
       if (url && fileName && fileType) {
         if (cache) {
           this.useCache(fileType, url, fileName, callback)
         } else {
-          httpRequest.request(url, {
+          httpRequest.requestInStream(url, {
             expectDataType: http.HttpDataType.ARRAY_BUFFER,
-            method: http.RequestMethod.GET,
+            method: http.RequestMethod.GET, // 可选，默认为http.RequestMethod.GET。
             connectTimeout: 60000,
             readTimeout: 60000
-          },
-            (err: BusinessError, data: http.HttpResponse) => {
-              if (err) {
-                callback?.(err);
-                return
-              }
-              if (data.result instanceof ArrayBuffer) {
-                let imageBuffer = data.result as ArrayBuffer;
-                const filePath = this.getFilePath(fileName, fileType, url)
-                let tempFile = fileIo.openSync(filePath, fileIo.OpenMode.CREATE | fileIo.OpenMode.READ_WRITE)
-                try {
-                  fileIo.writeSync(tempFile.fd, imageBuffer)
-                  fileIo.close(tempFile.fd)
-                  this.shareFile(filePath, fileType, callback)
-                } catch (err) {
-                  callback?.(err);
-                  return
-                }
-              }
-            })
+          })
+          httpRequest.on('dataReceiveProgress',(data)=>{
+            const progress = data.receiveSize * 100 /data.totalSize;
+            if(progress<100){
+              this.ctx?.rnInstance?.emitDeviceEvent('RNDownloaderProgress',{progress});
+            }
+          })
+          httpRequest.on('dataReceive',(buffer)=>{
+            chunks.push(buffer);
+          })
+          httpRequest.on('dataEnd',()=>{
+            this.ctx?.rnInstance?.emitDeviceEvent('RNDownloaderProgress',{progress:100});
+
+            // 合并所有ArrayBuffer
+            const totalLength = chunks.reduce((len, chunk) => len + chunk.byteLength, 0);
+            const mergedBuffer = new Uint8Array(totalLength);
+            let offset = 0;
+            chunks.forEach(chunk => {
+              mergedBuffer.set(new Uint8Array(chunk), offset);
+              offset += chunk.byteLength;
+            });
+
+            // 一次性写入完整数据
+            const tempFile = fileIo.openSync(filePath, 0o102);
+            fileIo.writeSync(tempFile.fd, mergedBuffer.buffer);
+            fileIo.closeSync(tempFile.fd);
+            this.shareFile(filePath, fileType, callback);
+          })
         }
       } else {
         callback(`Requires parameters: url,fileName,fileType`)

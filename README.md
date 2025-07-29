@@ -34,33 +34,37 @@ yarn add react-native-ohos-docviewer
 > [!WARNING] 使用时 import 导入的库名不变。因为该库具有 alias 别名: react-native-ohos-docviewer [主要是统一 android/ios import 导入]
 
 ```js
-import React, {useEffect} from 'react';
+import React, { useEffect } from "react";
 import {
   Button,
   DeviceEventEmitter,
   SafeAreaView,
   StatusBar,
   StyleSheet,
-} from 'react-native';
-import OpenFile from 'react-native-doc-viewer';
-import {getBase64ImagePath} from './imgbase64';
+} from "react-native";
+import OpenFile from "react-native-doc-viewer";
+import { getBase64ImagePath } from "./imgbase64";
 const App = () => {
   useEffect(() => {
     //监听文件预览下载进度
-    DeviceEventEmitter.addListener('RNDownloaderProgress', event => {
+    const subscribtion = DeviceEventEmitter.addListener("RNDownloaderProgress", (event) => {
       // 添加事件处理
-      console.log('Download progress:', event.progress);
+      console.log("Download progress:", event.progress);
     });
     return () => {
       // 清理事件监听器
-      DeviceEventEmitter.removeAllListeners('RNDownloaderProgress');
+      subscribtion&& subscribtion.remove();
     };
   }, []);
   const previewImage = () => {
     OpenFile.openDoc(
       [
         {
-          url: 'https://i.gsxcdn.com/2015162519_i828z3ug.jpeg',
+          url: "https://i.gsxcdn.com/2015162519_i828z3ug.jpeg",
+          //ios required fileName
+          fileName:'sample',
+          //android required cache
+          cache:false
         },
       ],
       (error: any, url: string) => {
@@ -68,14 +72,18 @@ const App = () => {
         } else {
           console.log(url);
         }
-      },
+      }
     );
   };
   const previewWord = () => {
     OpenFile.openDoc(
       [
         {
-          url: 'https://calibre-ebook.com/downloads/demos/demo.docx',
+          url: "https://calibre-ebook.com/downloads/demos/demo.docx",
+           //ios required fileName
+          fileName:'demo',
+          //android required cache
+          cache:false
         },
       ],
       (error: any, url: string) => {
@@ -83,7 +91,7 @@ const App = () => {
         } else {
           console.log(url);
         }
-      },
+      }
     );
   };
   const previewBase64 = () => {
@@ -91,8 +99,8 @@ const App = () => {
       [
         {
           base64: getBase64ImagePath(),
-          fileName: 'example',
-          fileType: 'jpg',
+          fileName: "example",
+          fileType: "jpg",
         },
       ],
       (error: any, url: string) => {
@@ -100,30 +108,33 @@ const App = () => {
         } else {
           console.log(url);
         }
-      },
+      }
     );
   };
   const previewXML = () => {
     OpenFile.openDocBinaryinUrl(
       [
         {
-          url: 'https://storage.googleapis.com/need-sure/example',
-          fileName: 'example',
-          fileType: 'xml',
+          url: "https://storage.googleapis.com/need-sure/example",
+            //ios required fileName
+          fileName:'example',
+          //android required cache
+          cache:false
+          fileType: "xml",
         },
       ],
       (error: any, url: string) => {
         if (error) {
-          console.log('Error opening XML file:', error);
+          console.log("Error opening XML file:", error);
         } else {
           console.log(url);
         }
-      },
+      }
     );
   };
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={'dark-content'} />
+      <StatusBar barStyle={"dark-content"} />
       <Button onPress={previewImage} title="预览图片" />
       <Button onPress={previewWord} title="预览word文档" />
       <Button onPress={previewBase64} title="base64打开预览" />

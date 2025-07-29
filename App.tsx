@@ -2,13 +2,11 @@ import React, {useEffect} from 'react';
 import {
   Button,
   DeviceEventEmitter,
-  NativeEventEmitter,
-  NativeModules,
   SafeAreaView,
   StatusBar,
   StyleSheet,
 } from 'react-native';
-import OpenFile from 'rtn-docviewer';
+import OpenFile from 'react-native-doc-viewer';
 import {getBase64ImagePath} from './imgbase64';
 const App = () => {
   //[TIP:]两种监听下载进度事件
