@@ -49,8 +49,8 @@ ios 需要
     "postinstall-postinstall": "^2.1.0",
     "react": "18.2.0",
     "react-native": "0.72.5",
--    "rn-newarch-svga-player":"^1.0.7"
-+   "react-native-svga-player":"npm:rn-newarch-svga-player@1.0.7",
+-    "rn-newarch-svga-player":"^1.1.2"
++   "react-native-svga-player":"npm:rn-newarch-svga-player@1.1.2",
     "react-native-ohos-svgaplayer": "^1.1.7"
   },
 
@@ -183,15 +183,10 @@ const styles = StyleSheet.create({
 ##### 最后，在 RN 项目中调用，播放 ios 需要注意不需要加后缀名.svga
 
 ```js
-{
-  /* 播放本地资源： tips:注意 ios svga动画不需要后缀名[库作者封装时的要求] harmony和android都需要*/
-}
 <RNSvgaPlayer
   style={styles.localSvga}
   source={
-    Platform.OS === 'ios'
-      ? 'homePage_studyPlanner_computer_welcome'
-      : 'homePage_studyPlanner_computer_welcome.svga'
+    'homePage_studyPlanner_computer_welcome.svga'
   }
   onFinished={() => {
     console.log('onFinished');
@@ -207,55 +202,45 @@ const styles = StyleSheet.create({
 
 ### 完整实例
 
-```javascript
-import React from 'react';
+```js
+import React, { useRef, useState } from "react";
 import {
   Button,
-  Platform,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   View,
-} from 'react-native';
-import RNSvgaPlayer from 'react-native-svga-player';
-const files = ['Goddess', 'Rocket', 'heartbeat', 'rose_2.0.0'];
+} from "react-native";
+import { RNSvgaPlayer, SvgaPlayerRef } from "react-native-svga-player";
 const App = () => {
-  const svgaPlayerRef = React.useRef < RNSvgaPlayer > null;
+  const svgaPlayerRef = useRef < SvgaPlayerRef > null;
+  //播放网络资源
+  const [source, setSource] = useState(
+    "https://raw.githubusercontent.com/yyued/SVGAPlayer-iOS/master/SVGAPlayer/Samples/Goddess.svga"
+  );
+  //播放本地资源
+  // const [source, setSource] = useState(
+  //   'homePage_studyPlanner_computer_welcome.svga',
+  // );
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={'dark-content'} />
+      <StatusBar barStyle={"dark-content"} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.welcome}>Svga</Text>
-        <View style={styles.container}>
-          {files.map(f => (
-            <View key={f} style={styles.containerW}>
-              <RNSvgaPlayer
-                style={{width: 150, height: 150}}
-                source={`https://raw.githubusercontent.com/yyued/SVGAPlayer-iOS/master/SVGAPlayer/Samples/${f}.svga`}
-              />
-              <Text>{f}</Text>
-            </View>
-          ))}
-        </View>
-        {/* 播放本地资源： tips:注意 ios svga动画不需要后缀名 harmony和android都需要*/}
         <RNSvgaPlayer
           ref={svgaPlayerRef}
-          style={styles.localSvga}
-          source={
-            Platform.OS === 'ios'
-              ? 'homePage_studyPlanner_computer_welcome'
-              : 'homePage_studyPlanner_computer_welcome.svga'
-          }
+          source={source}
+          autoPlay={true}
+          loops={1} // 循环次数，默认 0无限循环
+          clearsAfterStop={false} // 停止后清空画布，默认 true
+          style={styles.svgaStyle}
           onFinished={() => {
-            console.log('onFinished');
-          }}
-          onFrame={value => {
-            console.log('onFrame', value);
-          }}
-          onPercentage={value => {
-            console.log('onPercent', value);
+            console.log("播放完成");
+          }} // 播放完成回调
+          onLoaded={() => {
+            console.log("动画加载完成");
           }}
         />
         <View style={styles.flexAround}>
@@ -268,7 +253,7 @@ const App = () => {
           <Button
             title="暂停动画"
             onPress={() => {
-              svgaPlayerRef.current?.pauseAnimation();
+              // svgaPlayerRef.current?.pauseAnimation();
             }}
           />
           <Button
@@ -278,25 +263,25 @@ const App = () => {
             }}
           />
         </View>
-        <View style={[styles.flexAround, {marginTop: 20}]}>
+        <View style={[styles.flexAround, { marginTop: 20 }]}>
           <Button
             title="手动加载动画"
             onPress={() => {
-              svgaPlayerRef.current?.load(
-                'https://raw.githubusercontent.com/yyued/SVGAPlayer-iOS/master/SVGAPlayer/Samples/Goddess.svga',
+              setSource(
+                "https://raw.githubusercontent.com/yyued/SVGAPlayer-iOS/master/SVGAPlayer/Samples/matteBitmap.svga"
               );
             }}
           />
           <Button
             title="指定帧开始"
             onPress={() => {
-              svgaPlayerRef.current?.stepToFrame(20, true);
+              // svgaPlayerRef.current?.stepToFrame(20, true);
             }}
           />
           <Button
             title="指定百分比开始"
             onPress={() => {
-              svgaPlayerRef.current?.stepToPercentage(0.5, true);
+              // svgaPlayerRef.current?.stepToPercentage(1, true);
             }}
           />
         </View>
@@ -306,30 +291,24 @@ const App = () => {
 };
 export default App;
 const styles = StyleSheet.create({
-  containerW: {
-    width: '45%',
-  },
-  flexAround: {flexDirection: 'row', justifyContent: 'space-around'},
+  flexAround: { flexDirection: "row", justifyContent: "space-around" },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
   },
-  localSvga: {
+  svgaStyle: {
     width: 150,
     height: 150,
     marginTop: 30,
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
     margin: 10,
     marginTop: 80,
   },
   instructions: {
-    textAlign: 'center',
-    color: '#333333',
+    textAlign: "center",
+    color: "#333333",
     marginBottom: 5,
   },
 });
