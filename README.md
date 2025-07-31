@@ -180,8 +180,6 @@ const styles = StyleSheet.create({
 
 - harmony: 需要把 svga 文件放置于主 entry hap 目录 entry/src/main/ets/resources/rawfile/文件夹下：例如：`entry/src/main/ets/resources/rawfile/homePage_studyPlanner_computer_welcome.svga`,没有 rawfile 需要手动创建
 
-##### 最后，在 RN 项目中调用，播放 ios 需要注意不需要加后缀名.svga
-
 ```js
 <RNSvgaPlayer
   style={styles.localSvga}
