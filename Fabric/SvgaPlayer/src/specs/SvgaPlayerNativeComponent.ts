@@ -7,7 +7,7 @@ import type {
 import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 
-interface NativeProps extends ViewProps {
+interface SvgaPlayerProps extends ViewProps {
   source: string;
   autoPlay?: boolean;
   loops?: Int32;
@@ -19,7 +19,7 @@ interface NativeProps extends ViewProps {
   onLoaded?: BubblingEventHandler<{}>;
 }
 
-export type ComponentType = HostComponent<NativeProps>;
+export type ComponentType = HostComponent<SvgaPlayerProps>;
 
 interface NativeCommands {
   startAnimation: (viewRef: React.ElementRef<ComponentType>) => void;
@@ -30,4 +30,4 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
   supportedCommands: ['startAnimation', 'stopAnimation'],
 });
 
-export default codegenNativeComponent<NativeProps>('RNSvgaPlayer');
+export default codegenNativeComponent<SvgaPlayerProps>('RNSvgaPlayer');

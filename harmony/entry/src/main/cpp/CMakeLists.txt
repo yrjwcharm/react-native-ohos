@@ -1,5 +1,5 @@
 project(rnapp)
-cmake_minimum_required(VERSION 3.5.0)
+cmake_minimum_required(VERSION 3.4.1)
 set(CMAKE_SKIP_BUILD_RPATH TRUE)
 set(NATIVERENDER_ROOT_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
 set(OH_MODULE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../oh_modules")
@@ -124,6 +124,7 @@ if("$ENV{RNOH_C_API_ARCH}" STREQUAL "1")
 endif()
 # RNOH_END: add_package_subdirectories
 add_subdirectory("${OH_MODULE_DIR}/@react-native-ohos/react-native-svga-player/src/main/cpp" ./svgaplayer)
+add_subdirectory("${OH_MODULE_DIR}/@react-native-oh-tpl/react-native-video/src/main/cpp" ./video)
 
 # 添加rnoh_app共享包
 add_library(rnoh_app SHARED
@@ -135,5 +136,11 @@ add_library(rnoh_app SHARED
 
 target_link_libraries(rnoh_app PUBLIC rnoh)
 target_link_libraries(rnoh_app PUBLIC rnoh_svgaplayer)
+target_link_libraries(rnoh_app PUBLIC rnoh_video)
+
+# 三方包得加上folly编译配置
+target_compile_options(rnoh_video PUBLIC ${folly_compile_options})
+
+target_compile_options(rnoh_svgaplayer PUBLIC ${folly_compile_options})
 
 target_compile_options(rnoh_app PUBLIC ${folly_compile_options} -DRAW_PROPS_ENABLED -std=c++17)

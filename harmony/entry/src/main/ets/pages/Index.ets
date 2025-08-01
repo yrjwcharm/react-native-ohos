@@ -1,4 +1,4 @@
-import { SvgaPlayerView } from '@react-native-ohos/react-native-svga-player';
+// import { SvgaPlayerView } from '@react-native-ohos/react-native-svga-player';
 import {
   AnyJSBundleProvider,
   ComponentBuilderContext,
@@ -12,7 +12,10 @@ import {
   RNOHCoreContext,
 } from '@rnoh/react-native-openharmony';
 import { createRNPackages } from '../RNPackagesFactory';
-const arkTsComponentNames: Array<string> = [SvgaPlayerView.NAME];
+import { RNCVideo, RNC_VIDEO_TYPE } from "@react-native-oh-tpl/react-native-video"
+import { SvgaPlayerView } from '@react-native-ohos/react-native-svga-player';
+
+const arkTsComponentNames: Array<string> = [SvgaPlayerView.NAME,RNC_VIDEO_TYPE];
 
 @Builder
 export function buildCustomRNComponent(ctx: ComponentBuilderContext) {
@@ -22,7 +25,13 @@ export function buildCustomRNComponent(ctx: ComponentBuilderContext) {
         ctx: ctx.rnComponentContext,
         tag: ctx.tag
       })
-    }
+     }
+    if(ctx.componentName === RNC_VIDEO_TYPE) {
+         RNCVideo({
+             ctx: ctx.rnComponentContext,
+             tag: ctx.tag
+             })
+        }
   }
   .position({ x: 0, y: 0 })
 }

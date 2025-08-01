@@ -6,26 +6,26 @@
  */
 
 import { RNOHContext, RNViewBase } from '@rnoh/react-native-openharmony';
-import { SvgaPlayerV2, SvgaController, SvgaError } from '@tb-open/svga';
+import { SvgaPlayerV2, SvgaController, Logger, LogLevel } from '@tb-open/svga';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { fileIo } from '@kit.CoreFileKit';
-import { RNC } from '../generated';
 import { common } from '@kit.AbilityKit';
+import { RNC } from '../generated';
 
 @Component
 export struct SvgaPlayerView {
   public static readonly NAME = RNC.RNSvgaPlayer.NAME;
   private controller: SvgaController = new SvgaController({
-    loops: Infinity, // 无限循环播放
+    loops: Infinity, // 播放3次
     fillMode: 'forwards', // 播放结束后停留在最后一帧
     pageUpdateMode: 'pause', // 页面切换时暂停动画
     autoRelease: true, // 页面销毁时自动释放资源
-    clearsAfterStop: true        // 停止播放后清理资源
+    clearsAfterStop: true    ,    // 停止播放后清理资源
   });
   public ctx!: RNOHContext;
   public tag: number = 0;
   @State descriptorWrapper: RNC.RNSvgaPlayer.DescriptorWrapper = {} as RNC.RNSvgaPlayer.DescriptorWrapper;
-  private url: ResourceStr = '';
+  @State url: ResourceStr = '';
   private eventEmitter: RNC.RNSvgaPlayer.EventEmitter | undefined = undefined;
   private cleanUpCallbacks: (() => void)[] = [];
 
@@ -58,24 +58,19 @@ export struct SvgaPlayerView {
     //   this.controller.stepToPercentage(params[0],params[1]);
     // }))
     // 播放完成回调
-   this. controller.onFinished(() => {
+    this. controller.onFinished(() => {
       console.info('动画播放完成');
       this.eventEmitter?.emit('finished',{finished:true});
     });
 
-    this.controller.onError((err:SvgaError)=>{
-      this.eventEmitter?.emit('error', {
-        error: JSON.stringify(err)
-      });
-    })
     // 帧变化回调
-   this. controller.onFrame((frame) => {
+    this. controller.onFrame((frame) => {
       console.info(`当前帧: ${frame}`);
-     // this.eventEmitter?.emit('frame',{
-     //   value:frame
-     // });
+      // this.eventEmitter?.emit('frame',{
+      //   value:frame
+      // });
 
-   });
+    });
 
     // 进度变化回调
     this.controller.onPercentage((percent) => {
@@ -96,21 +91,12 @@ export struct SvgaPlayerView {
     //     new SelectItems(item.id, item.text, value.includes(item.id))
     //   )
     // }
-    const  source = this.descriptorWrapper.props.source??'';
-    const  loops = this.descriptorWrapper.props.loops??Infinity;
-    const autoPlay = this.descriptorWrapper.props.autoPlay??true;
+    let source = this.descriptorWrapper.props.source??'';
     if (source.startsWith("http") || source.startsWith("https")) {
       this.url =source;
     } else {
       this.onCopyRawFileToLocal(source);
     }
-    if(loops===0){
-      this.controller?.setLoops(Infinity);
-    }else{
-      this.controller?.setLoops(loops);
-    }
-    this.controller.load(this.url, autoPlay); // 第二个参数为是否自动播放
-
   }
 
   aboutToDisappear() {
@@ -142,10 +128,7 @@ export struct SvgaPlayerView {
       // 声明式UI 2.0版本组件
       SvgaPlayerV2({
         url:  this.url,
-        controller: this.controller,
-        onReady:(()=>{
-          this.eventEmitter?.emit('loaded',{} as Record<string,Object>)
-        })
+        controller: this.controller
       })
       // Button("确定")
       //   .onClick(() => {

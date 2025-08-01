@@ -1,12 +1,13 @@
 {
   "dependencies": {
+    "@react-native-oh-tpl/react-native-video": "^5.2.2",
     "@react-native-oh/react-native-harmony": "0.72.48",
     "patch-package": "^8.0.0",
     "postinstall-postinstall": "^2.1.0",
     "react": "18.2.0",
     "react-native": "0.72.5",
-    "react-native-svga-player":"npm:rn-newarch-svga-player@1.1.2",
-    "react-native-ohos-svgaplayer": "file:./Fabric/SvgaPlayer"
+    "react-native-ohos-svgaplayer": "1.1.8",
+    "react-native-svga-player": "npm:rn-newarch-svga-player@1.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
