@@ -23,6 +23,8 @@ class RNSvgaPlayerJSIBinder : public ViewComponentJSIBinder {
         events.setProperty(rt, "topError", createBubblingCapturedEvent(rt, "onError"));
         events.setProperty(rt, "topFinished", createBubblingCapturedEvent(rt, "onFinished"));
         events.setProperty(rt, "topLoaded", createBubblingCapturedEvent(rt, "onLoaded"));
+        events.setProperty(rt, "topFrameChanged", createBubblingCapturedEvent(rt, "onFrameChanged"));
+        events.setProperty(rt, "topPercentageChanged", createBubblingCapturedEvent(rt, "onPercentageChanged"));
         return events;
     }
 

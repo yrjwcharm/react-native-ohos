@@ -29,11 +29,23 @@ class RNSvgaPlayerEventEmitter : public ViewEventEmitter {
   struct OnLoaded {
       
     };
+
+  struct OnFrameChanged {
+      double value;
+    };
+
+  struct OnPercentageChanged {
+      double value;
+    };
   void onError(OnError value) const;
 
   void onFinished(OnFinished value) const;
 
   void onLoaded(OnLoaded value) const;
+
+  void onFrameChanged(OnFrameChanged value) const;
+
+  void onPercentageChanged(OnPercentageChanged value) const;
 };
 } // namespace react
 } // namespace facebook

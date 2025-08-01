@@ -1,65 +1,57 @@
 {
-  "author": "yanruifeng <xlyanrui@sina.com> (https://github.com/yrjwcharm)",
+  "author": "闫瑞锋",
   "bugs": {
-    "url": "https://github.com/yrjwcharm/react-native-ohos-svgaplayer/issues"
+    "url": "https://github.com/yrjwcharm/react-native-svgaplayer/issues"
   },
-  "dependencies": {
-
+  "codegenConfig": {
+    "android": {
+      "javaPackageName": "com.svgaplayer"
+    },
+    "ios": {
+      "componentProvider": {
+        "RNSvgaPlayer": "RCTSvgaPlayer"
+      }
+    },
+    "jsSrcsDir": "./src/specs",
+    "name": "RNSvgaPlayerSpec",
+    "type": "components"
   },
-  "description": "这是一款加载harmonyOS Svga动画的react-native开源插件",
+  "dependencies": {},
+  "description": "这是一款使用ReactNative Fabric新架构加载Svga动画的开源插件",
   "devDependencies": {
-    "@rnoh/react-native-harmony-cli": "npm:@react-native-oh/react-native-harmony-cli@^0.0.27",
+    "@types/react": "^18.2.47",
     "react": "18.2.0",
     "react-native": "0.72.5"
   },
   "files": [
-    "harmony",
+    "android",
+    "ios",
     "lib",
     "src",
     "SvgaPlayer.tsx",
-    "index.tsx"
+    "rn-newarch-svga-player.podspec"
   ],
-  "harmony": {
-    "alias": "react-native-svga-player"
-  },
-  "homepage": "https://github.com/yrjwcharm/react-native-ohos-svgaplayer#readme",
-  "license": "MIT",
-  "main": "./index.tsx",
-  "private": true,
-  "name": "react-native-ohos-svgaplayer",
-  "peerDependencies": {
-    "react": "*",
-    "react-native": "*"
-  },
-  "prettier": {
-    "quoteProps": "consistent",
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "useTabs": false
-  },
+  "homepage": "https://github.com/yrjwcharm/rn-newarch-svga-player#readme",
   "keywords": [
     "fabric",
-    "harmony",
-    "ohos",
+    "player",
     "react-native",
     "svga",
     "SvgaPlayer"
   ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+  "license": "ISC",
+  "main": "index.tsx",
+  "name": "rn-newarch-svga-player",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:yrjwcharm/react-native-ohos-svgaplayer.git"
+    "url": "git+https://github.com/yrjwcharm/rn-newarch-svga-player.git"
   },
   "scripts": {
     "codegen-lib": "react-native codegen-lib-harmony --no-safety-check --npm-package-name react-native-ohos-svgaplayer --cpp-output-path ../../harmony/svgaplayer/src/main/cpp/generated --ets-output-path ../../harmony/svgaplayer/src/main/ets/generated --turbo-modules-spec-paths ./src  --arkts-components-spec-paths ./src"
   },
-  "types": "./lib/index.d.ts",
-  "version": "1.1.7",
-  "workspaces": [
-    "example"
-  ]
+  "version": "1.1.8"
 }

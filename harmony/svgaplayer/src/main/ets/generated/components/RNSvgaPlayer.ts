@@ -80,6 +80,8 @@ export namespace RNSvgaPlayer {
     "error": {error: string}
     "finished": {finished: boolean}
     "loaded": {}
+    "frameChanged": {value: number}
+    "percentageChanged": {value: number}
   }
   
   export class EventEmitter {
@@ -93,6 +95,10 @@ export namespace RNSvgaPlayer {
   export interface CommandArgvByName {
     "startAnimation": []
     "stopAnimation": []
+    "pauseAnimation": []
+    "stepToFrame": [number, boolean]
+    "stepToPercentage": [number, boolean]
+    "startAnimationWithRange": [number, number, boolean]
   }
   
   export class CommandReceiver {

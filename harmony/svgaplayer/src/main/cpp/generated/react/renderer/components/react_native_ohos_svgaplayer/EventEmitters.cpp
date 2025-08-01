@@ -40,5 +40,23 @@ void RNSvgaPlayerEventEmitter::onLoaded(OnLoaded $event) const {
   });
 }
 
+
+void RNSvgaPlayerEventEmitter::onFrameChanged(OnFrameChanged $event) const {
+  dispatchEvent("frameChanged", [$event=std::move($event)](jsi::Runtime &runtime) {
+    auto $payload = jsi::Object(runtime);
+    $payload.setProperty(runtime, "value", $event.value);
+    return $payload;
+  });
+}
+
+
+void RNSvgaPlayerEventEmitter::onPercentageChanged(OnPercentageChanged $event) const {
+  dispatchEvent("percentageChanged", [$event=std::move($event)](jsi::Runtime &runtime) {
+    auto $payload = jsi::Object(runtime);
+    $payload.setProperty(runtime, "value", $event.value);
+    return $payload;
+  });
+}
+
 } // namespace react
 } // namespace facebook
