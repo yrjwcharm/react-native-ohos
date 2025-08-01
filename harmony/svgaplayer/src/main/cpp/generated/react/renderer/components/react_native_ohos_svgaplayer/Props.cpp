@@ -15,12 +15,16 @@
 namespace facebook {
 namespace react {
 
-SvgaPlayerViewProps::SvgaPlayerViewProps(
+RNSvgaPlayerProps::RNSvgaPlayerProps(
     const PropsParserContext &context,
-    const SvgaPlayerViewProps &sourceProps,
+    const RNSvgaPlayerProps &sourceProps,
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
-    source(convertRawProp(context, rawProps, "source", sourceProps.source, {}))
+    source(convertRawProp(context, rawProps, "source", sourceProps.source, {})),
+    autoPlay(convertRawProp(context, rawProps, "autoPlay", sourceProps.autoPlay, {false})),
+    loops(convertRawProp(context, rawProps, "loops", sourceProps.loops, {0})),
+    clearsAfterStop(convertRawProp(context, rawProps, "clearsAfterStop", sourceProps.clearsAfterStop, {false})),
+    align(convertRawProp(context, rawProps, "align", sourceProps.align, {RNSvgaPlayerAlign::Center}))
       {}
 
 } // namespace react

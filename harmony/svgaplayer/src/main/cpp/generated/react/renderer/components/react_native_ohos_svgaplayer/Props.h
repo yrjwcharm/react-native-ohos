@@ -15,14 +15,36 @@
 namespace facebook {
 namespace react {
 
-class SvgaPlayerViewProps final : public ViewProps {
+enum class RNSvgaPlayerAlign { Top, Bottom, Center };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, RNSvgaPlayerAlign &result) {
+  auto string = (std::string)value;
+  if (string == "top") { result = RNSvgaPlayerAlign::Top; return; }
+  if (string == "bottom") { result = RNSvgaPlayerAlign::Bottom; return; }
+  if (string == "center") { result = RNSvgaPlayerAlign::Center; return; }
+  abort();
+}
+
+static inline std::string toString(const RNSvgaPlayerAlign &value) {
+  switch (value) {
+    case RNSvgaPlayerAlign::Top: return "top";
+    case RNSvgaPlayerAlign::Bottom: return "bottom";
+    case RNSvgaPlayerAlign::Center: return "center";
+  }
+}
+
+class RNSvgaPlayerProps final : public ViewProps {
  public:
-  SvgaPlayerViewProps() = default;
-  SvgaPlayerViewProps(const PropsParserContext& context, const SvgaPlayerViewProps &sourceProps, const RawProps &rawProps);
+  RNSvgaPlayerProps() = default;
+  RNSvgaPlayerProps(const PropsParserContext& context, const RNSvgaPlayerProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
   std::string source{};
+  bool autoPlay{false};
+  int loops{0};
+  bool clearsAfterStop{false};
+  RNSvgaPlayerAlign align{RNSvgaPlayerAlign::Center};
 };
 
 } // namespace react

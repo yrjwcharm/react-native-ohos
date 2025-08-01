@@ -1,48 +1,33 @@
-import {HostComponent, ViewProps} from 'react-native';
-import {
-  DirectEventHandler,
-  Float,
+import type { HostComponent, ViewProps } from 'react-native';
+import type {
+  BubblingEventHandler,
+  Int32,
+  WithDefault,
 } from 'react-native/Libraries/Types/CodegenTypes';
 import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
-interface ICallbacks {
-  value: Float;
-}
-export interface SvgaPlayerProps extends ViewProps {
+
+interface NativeProps extends ViewProps {
   source: string;
-  onFinished?: DirectEventHandler<{}>;
-  onFrame?: DirectEventHandler<ICallbacks>;
-  onPercentage?: DirectEventHandler<ICallbacks>;
+  autoPlay?: boolean;
+  loops?: Int32;
+  clearsAfterStop?: boolean;
+  align?: WithDefault<'top' | 'bottom' | 'center', 'center'>;
+  // 事件回调
+  onError?: BubblingEventHandler<{ error: string }>;
+  onFinished?: BubblingEventHandler<{ finished: boolean }>;
+  onLoaded?: BubblingEventHandler<{}>;
 }
-type NativeType = HostComponent<SvgaPlayerProps>;
-export interface NativeCommands {
-  load: (viewRef: React.ElementRef<NativeType>, source: string) => void;
-  startAnimation: (viewRef: React.ElementRef<NativeType>) => void;
-  pauseAnimation: (viewRef: React.ElementRef<NativeType>) => void;
-  stopAnimation: (viewRef: React.ElementRef<NativeType>) => void;
-  stepToFrame: (
-    viewRef: React.ElementRef<NativeType>,
-    toFrame: Float,
-    andPlay: boolean,
-  ) => void;
-  stepToPercentage: (
-    viewRef: React.ElementRef<NativeType>,
-    toPercentage: Float,
-    andPlay: boolean,
-  ) => void;
+
+export type ComponentType = HostComponent<NativeProps>;
+
+interface NativeCommands {
+  startAnimation: (viewRef: React.ElementRef<ComponentType>) => void;
+  stopAnimation: (viewRef: React.ElementRef<ComponentType>) => void;
 }
 
 export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
-  supportedCommands: [
-    'load',
-    'startAnimation',
-    'pauseAnimation',
-    'stopAnimation',
-    'stepToFrame',
-    'stepToPercentage',
-  ],
+  supportedCommands: ['startAnimation', 'stopAnimation'],
 });
 
-export default codegenNativeComponent<SvgaPlayerProps>(
-  'SvgaPlayerView',
-) as HostComponent<SvgaPlayerProps>;
+export default codegenNativeComponent<NativeProps>('RNSvgaPlayer');

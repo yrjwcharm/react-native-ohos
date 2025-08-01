@@ -13,7 +13,7 @@
 namespace facebook {
 namespace react {
 
-extern const char SvgaPlayerViewComponentName[] = "SvgaPlayerView";
+extern const char RNSvgaPlayerComponentName[] = "RNSvgaPlayer";
 
 } // namespace react
 } // namespace facebook

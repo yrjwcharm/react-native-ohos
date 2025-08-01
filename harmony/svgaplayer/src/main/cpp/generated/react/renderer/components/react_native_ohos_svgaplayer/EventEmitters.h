@@ -14,26 +14,26 @@
 
 namespace facebook {
 namespace react {
-class SvgaPlayerViewEventEmitter : public ViewEventEmitter {
+class RNSvgaPlayerEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
+  struct OnError {
+      std::string error;
+    };
+
   struct OnFinished {
+      bool finished;
+    };
+
+  struct OnLoaded {
       
     };
+  void onError(OnError value) const;
 
-  struct OnFrame {
-      Float value;
-    };
-
-  struct OnPercentage {
-      Float value;
-    };
   void onFinished(OnFinished value) const;
 
-  void onFrame(OnFrame value) const;
-
-  void onPercentage(OnPercentage value) const;
+  void onLoaded(OnLoaded value) const;
 };
 } // namespace react
 } // namespace facebook

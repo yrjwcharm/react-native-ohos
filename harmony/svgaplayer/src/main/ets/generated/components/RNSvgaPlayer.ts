@@ -16,11 +16,15 @@ import {
 } from '@rnoh/react-native-openharmony/ts';
 
 
-export namespace SvgaPlayerView {
-  export const NAME = "SvgaPlayerView" as const
+export namespace RNSvgaPlayer {
+  export const NAME = "RNSvgaPlayer" as const
 
   export interface DirectRawProps {
-    source: string;
+    source?: string;
+    autoPlay?: boolean;
+    loops?: number;
+    clearsAfterStop?: boolean;
+    align?: 'top' | 'bottom' | 'center';
   }
   
   export interface Props extends ViewBaseProps {}
@@ -32,6 +36,22 @@ export namespace SvgaPlayerView {
   export class PropsSelector extends ViewPropsSelector<Props, RawProps> {
     get source() {
       return this.rawProps.source;
+    }
+    
+    get autoPlay() {
+      return this.rawProps.autoPlay ?? false;
+    }
+    
+    get loops() {
+      return this.rawProps.loops ?? 0;
+    }
+    
+    get clearsAfterStop() {
+      return this.rawProps.clearsAfterStop ?? false;
+    }
+    
+    get align() {
+      return this.rawProps.align ?? 'center';
     }
     
   
@@ -57,9 +77,9 @@ export namespace SvgaPlayerView {
   }
   
   export interface EventPayloadByName {
-    "finished": {}
-    "frame": {value: number}
-    "percentage": {value: number}
+    "error": {error: string}
+    "finished": {finished: boolean}
+    "loaded": {}
   }
   
   export class EventEmitter {
@@ -71,12 +91,8 @@ export namespace SvgaPlayerView {
   }
   
   export interface CommandArgvByName {
-    "load": [string]
     "startAnimation": []
-    "pauseAnimation": []
     "stopAnimation": []
-    "stepToFrame": [number, boolean]
-    "stepToPercentage": [number, boolean]
   }
   
   export class CommandReceiver {

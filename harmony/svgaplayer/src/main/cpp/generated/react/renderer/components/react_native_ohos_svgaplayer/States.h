@@ -17,12 +17,12 @@
 namespace facebook {
 namespace react {
 
-class SvgaPlayerViewState {
+class RNSvgaPlayerState {
 public:
-  SvgaPlayerViewState() = default;
+  RNSvgaPlayerState() = default;
 
 #ifdef ANDROID
-  SvgaPlayerViewState(SvgaPlayerViewState const &previousState, folly::dynamic data){};
+  RNSvgaPlayerState(RNSvgaPlayerState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
   };

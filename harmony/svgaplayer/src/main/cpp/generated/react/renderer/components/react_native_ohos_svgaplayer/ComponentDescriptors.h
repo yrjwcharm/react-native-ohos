@@ -16,7 +16,7 @@
 namespace facebook {
 namespace react {
 
-using SvgaPlayerViewComponentDescriptor = ConcreteComponentDescriptor<SvgaPlayerViewShadowNode>;
+using RNSvgaPlayerComponentDescriptor = ConcreteComponentDescriptor<RNSvgaPlayerShadowNode>;
 
 } // namespace react
 } // namespace facebook

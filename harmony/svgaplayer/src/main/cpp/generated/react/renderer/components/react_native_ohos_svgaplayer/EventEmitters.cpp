@@ -14,28 +14,28 @@
 namespace facebook {
 namespace react {
 
-void SvgaPlayerViewEventEmitter::onFinished(OnFinished $event) const {
-  dispatchEvent("finished", [](jsi::Runtime &runtime) {
+void RNSvgaPlayerEventEmitter::onError(OnError $event) const {
+  dispatchEvent("error", [$event=std::move($event)](jsi::Runtime &runtime) {
+    auto $payload = jsi::Object(runtime);
+    $payload.setProperty(runtime, "error", $event.error);
+    return $payload;
+  });
+}
+
+
+void RNSvgaPlayerEventEmitter::onFinished(OnFinished $event) const {
+  dispatchEvent("finished", [$event=std::move($event)](jsi::Runtime &runtime) {
+    auto $payload = jsi::Object(runtime);
+    $payload.setProperty(runtime, "finished", $event.finished);
+    return $payload;
+  });
+}
+
+
+void RNSvgaPlayerEventEmitter::onLoaded(OnLoaded $event) const {
+  dispatchEvent("loaded", [](jsi::Runtime &runtime) {
     auto $payload = jsi::Object(runtime);
     
-    return $payload;
-  });
-}
-
-
-void SvgaPlayerViewEventEmitter::onFrame(OnFrame $event) const {
-  dispatchEvent("frame", [$event=std::move($event)](jsi::Runtime &runtime) {
-    auto $payload = jsi::Object(runtime);
-    $payload.setProperty(runtime, "value", $event.value);
-    return $payload;
-  });
-}
-
-
-void SvgaPlayerViewEventEmitter::onPercentage(OnPercentage $event) const {
-  dispatchEvent("percentage", [$event=std::move($event)](jsi::Runtime &runtime) {
-    auto $payload = jsi::Object(runtime);
-    $payload.setProperty(runtime, "value", $event.value);
     return $payload;
   });
 }

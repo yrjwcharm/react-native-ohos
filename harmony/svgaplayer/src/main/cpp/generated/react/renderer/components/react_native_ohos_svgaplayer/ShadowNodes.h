@@ -19,16 +19,16 @@
 namespace facebook {
 namespace react {
 
-JSI_EXPORT extern const char SvgaPlayerViewComponentName[];
+JSI_EXPORT extern const char RNSvgaPlayerComponentName[];
 
 /*
- * `ShadowNode` for <SvgaPlayerView> component.
+ * `ShadowNode` for <RNSvgaPlayer> component.
  */
-using SvgaPlayerViewShadowNode = ConcreteViewShadowNode<
-    SvgaPlayerViewComponentName,
-    SvgaPlayerViewProps,
-    SvgaPlayerViewEventEmitter,
-    SvgaPlayerViewState>;
+using RNSvgaPlayerShadowNode = ConcreteViewShadowNode<
+    RNSvgaPlayerComponentName,
+    RNSvgaPlayerProps,
+    RNSvgaPlayerEventEmitter,
+    RNSvgaPlayerState>;
 
 } // namespace react
 } // namespace facebook

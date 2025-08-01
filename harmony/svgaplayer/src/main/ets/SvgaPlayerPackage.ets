@@ -6,7 +6,7 @@ import { RNC, TM } from "./generated";
 export class  SvgaPlayerPackage extends  RNPackage{
   createDescriptorWrapperFactoryByDescriptorType(ctx: DescriptorWrapperFactoryByDescriptorTypeCtx): DescriptorWrapperFactoryByDescriptorType {
     return {
-      'SvgaPlayerView': (ctx) => new RNC.SvgaPlayerView.DescriptorWrapper(ctx.descriptor)
+      'SvgaPlayerView': (ctx) => new RNC.RNSvgaPlayer.DescriptorWrapper(ctx.descriptor)
     }
   }
 }
