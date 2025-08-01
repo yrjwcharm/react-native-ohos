@@ -51,7 +51,7 @@ ios 需要
     "react-native": "0.72.5",
 -    "rn-newarch-svga-player":"^1.1.2"
 +   "react-native-svga-player":"npm:rn-newarch-svga-player@1.1.2",
-    "react-native-ohos-svgaplayer": "^1.1.7"
+    "react-native-ohos-svgaplayer": "^1.1.8"
   },
 
 @Builder
